@@ -236,7 +236,7 @@
 					// $('#subscribers').show();
 					if (search) {
 					$.ajax({
-                        url: "{{ URL::to('admin/get names') }}/" + parent,
+                        url: "{{ URL::to('admin/get-names') }}/" + parent,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {

@@ -136,10 +136,10 @@
                                                     <input class="rdiobox"  required type="radio" id="Whatsaap" name="sendType" value="Whatsaap">
                                                     <label  for="Whatsaap" style="margin-left: 5px;margin-bottom: 0px;font-weight: bold;">Whatsapp</label><br>
                                                 </div>
-                                                <div class="form-control" style="display: flex;border: none;align-items: center;">
+                                                {{-- <div class="form-control" style="display: flex;border: none;align-items: center;">
                                                     <label  for="number" style="margin-left: 5px;margin-bottom: 0px;font-weight: bold;">Whatsapp number :</label><br>
                                                     <input  required type="text" id="number" name="number" value="0634328147">
-                                                </div>
+                                                </div> --}}
                                                 
                                                 <div class="form-control" style="display: flex;border: none;align-items: center;">
                                                     <input class="rdiobox" required  type="radio" id="Email" name="sendType" value="Email">
