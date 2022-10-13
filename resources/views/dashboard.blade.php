@@ -20,7 +20,8 @@
 @endsection
 @section('content')
 {{-- select count(impayes.id) as "total_count" , subscribers.raisonsociale from impayes INNER JOIN subscribers on subscribers.raisonsociale = impayes.souscripteur GROUP BY subscribers.raisonsociale ORDER BY total_count DESC LIMIT 10; --}}
-				@php
+{{-- select sum(impayes.prime_total) as "total_prime" , subscribers.raisonsociale from impayes INNER JOIN subscribers on subscribers.raisonsociale = impayes.souscripteur GROUP BY subscribers.raisonsociale ORDER BY total_prime DESC LIMIT 10; --}}
+      @php
 				$data = \App\Models\Impayes\Impayes::select('branche', \DB::raw('count(*) as impayes_total'))
 				->groupBy('branche')
 				->get();
@@ -30,14 +31,19 @@
 					$data_values .= '["' . $dt->branche .'",   '.$dt->impayes_total.'],';
 				}
 				$chart_data = $data_values;
-
-
-
-
+       
+       
+        $data_1 = \DB::select('select sum(impayes.prime_total) as "total_prime" , subscribers.raisonsociale from impayes INNER JOIN subscribers on subscribers.raisonsociale = impayes.souscripteur GROUP BY subscribers.raisonsociale ORDER BY total_prime DESC LIMIT 10;');
+        $values_1 = [];
+        $data_values_1 =''; 
+        foreach ($data_1 as $dt) {
+					$data_values_1 .= '["' . $dt->raisonsociale  .'",   '.$dt->total_prime.'],';
+				}
+				$chart_data_1 = $data_values_1;
 				@endphp
 				<!-- row -->
-				<div id="piechart" style="width: 100%; height: 500px;display:block"></div>
-        <div id="top_x_div" style="width: 900px; height: 500px;"></div>	
+				<div id="piechart" style="width: 100%; height: 500px;display:block"></div><br><br>
+        <div id="top_x_div" style="width: 100%; height: 500px"></div><br><br>	
       </div>
 		<!-- Container closed -->
 @endsection
@@ -67,19 +73,15 @@
       function drawStuff() {
         var data = new google.visualization.arrayToDataTable([
           ['Opening Move', 'Percentage'],
-          ["King's pawn (e4)", 44],
-          ["Queen's pawn (d4)", 31],
-          ["Knight to King 3 (Nf3)", 12],
-          ["Queen's bishop pawn (c4)", 10],
-          ['Other', 3]
+          <?php echo $data_values_1; ?>
         ]);
 
         var options = {
-          title: 'Chess opening moves',
-          width: 900,
+          // title: 'Chess opening moves',
+          // width: 900,
           legend: { position: 'none' },
-          chart: { title: 'Chess opening moves',
-                   subtitle: 'popularity by percentage' },
+          chart: { title: '',
+                   subtitle: '' },
           bars: 'vertical', // Required for Material Bar Charts.
           axes: {
             x: {

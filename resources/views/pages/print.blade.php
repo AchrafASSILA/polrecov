@@ -231,6 +231,14 @@
                 }
 
         });
+            $('input[name="dateToSend"]').change(function(){
+                var value = this.value;
+                var d = new Date();
+                var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+                if(value < strDate){
+                    alert('Date Invalide')
+                }
+            })
                 $("input[name$='sendEmailType']").click(function() {
                 var test = $(this).val();
                     if(test === "Different"){

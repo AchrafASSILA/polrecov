@@ -166,13 +166,6 @@ class ImpayesController extends Controller
     // export to pdf and send it 
     public function exportPdf(Request $request)
     {
-        // if ($request->cc_emails) {
-
-        // return $request->cc_emails ? implode(',', $request->cc_emails) : "";
-        // } else {
-        //     return 'no';
-        // }
-        // return $request->cc_emails;
         // try {
         Artisan::call('emails:send');
         $files_to_send =  explode(',', ($request->files_to_send));
@@ -228,11 +221,17 @@ class ImpayesController extends Controller
             $to = $request->to;
             // check if the send mathod are different 
             if ($request->sendEmailType == 'Different') {
-                // return $cc_emails;
-                $this->sendInDifferenetdate($subscriber_name, $dateToSend, $file_name, $message, $request->files_to_send, $to, $cc_emails, $object);
-                return redirect()->route('scheduleEmail')->with([
-                    'success' => 'l\'email a été planifier avec succès',
-                ]);
+                $now = date('Y-m-d');
+                if ($dateToSend > $now) {
+
+
+                    $this->sendInDifferenetdate($subscriber_name, $dateToSend, $file_name, $message, $request->files_to_send, $to, $cc_emails, $object);
+                    return redirect()->route('scheduleEmail')->with([
+                        'success' => 'l\'email a été planifier avec succès',
+                    ]);
+                } else {
+                    return redirect()->back()->withErrors(['error' => 'Date Invalide']);
+                }
             } else {
                 $cc_emails =  array_unique(explode(',', $cc_emails));
                 $this->sendEmail($to, $file_name, $files_to_send, $request->message, $cc_emails, $object);

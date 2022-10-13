@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('mtt_ancaiss')->nullable();
             $table->string('ref_encaiss')->nullable();
             $table->string('aperiteur')->nullable();
+            $table->string('id_client')->nullable();
             $table->timestamps();
         });
     }

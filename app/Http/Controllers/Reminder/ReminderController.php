@@ -101,12 +101,18 @@ class ReminderController extends Controller
         // get reminder
         $reminder = Reminder::find($id);
         // update reminder date to send 
-        $reminder->update([
-            'dateOfLivred' => $request->date_of_livred,
-        ]);
-        return redirect()->route('scheduleEmail')->with([
-            'success' => 'Le rappel à été bien modifier'
-        ]);
+        $now = date('Y-m-d');
+        if ($request->date_of_livred > $now) {
+
+            $reminder->update([
+                'dateOfLivred' => $request->date_of_livred,
+            ]);
+            return redirect()->route('scheduleEmail')->with([
+                'success' => 'Le rappel à été bien modifier'
+            ]);
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Date Invalide']);
+        }
     }
 
     /**
