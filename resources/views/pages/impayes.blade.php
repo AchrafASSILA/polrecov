@@ -56,69 +56,73 @@
 										<div class="dropdown">
 											<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary" data-toggle="dropdown" id="dropdownMenuButton" type="button">Les Champs<i class="fas fa-caret-down ml-1"></i></button>
 											<div  class="dropdown-menu tx-13">
+												<form >
+
+
 												<div class="form-control"  style="border: none">
 													
-													<input type="checkbox" name="cells" id="" value="1">
-													<label for="">Exercice</label>
+													<input type="checkbox" name="cells" id="ex" value="1">
+													
+													<label for="ex">Exercice</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="2">
-													<label for="">Quittance</label>
+													<input type="checkbox" name="cells" id="qu" value="2">
+													<label for="qu">Quittance</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="3">
-													<label for="">Cie</label>
+													<input type="checkbox" name="cells" id="ci" value="3">
+													<label for="ci">Cie</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="4">
-													<label for="">Souscripteur</label>
+													<input type="checkbox" name="cells" id="sou" value="4">
+													<label for="sou">Souscripteur</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="6">
-													<label for="">Branche</label>
+													<input type="checkbox" name="cells" id="br" value="6">
+													<label for="br">Branche</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="7">
-													<label for="">Categorie</label>
+													<input type="checkbox" name="cells" id="ca" value="7">
+													<label for="ca">Categorie</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="8">
-													<label for="">Risque</label>
+													<input type="checkbox" name="cells" id="ri" value="8">
+													<label for="ri">Risque</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="9">
-													<label for="">Police</label>
+													<input type="checkbox" name="cells" id="po" value="9">
+													<label for="po">Police</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="10">
-													<label for="">Du</label>
+													<input type="checkbox" name="cells" id="du" value="10">
+													<label for="du">Du</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="11">
-													<label for="">Au</label>
+													<input type="checkbox" name="cells" id="au" value="11">
+													<label for="au">Au</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="12">
-													<label for="">Prime</label>
+													<input type="checkbox" name="cells" id="pr" value="12">
+													<label for="pr">Prime</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="13">
-													<label for="">Mt Encaiss</label>
+													<input type="checkbox" name="cells" id="mt" value="13">
+													<label for="mt">Mt Encaiss</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="14">
-													<label for="">Ref Encaiss</label>
+													<input type="checkbox" name="cells" id="re" value="14">
+													<label for="re">Ref Encaiss</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="" value="15">
-													<label for="">Aperiteur</label>
+													<input type="checkbox" name="cells" id="ap" value="15">
+													<label for="ap">Aperiteur</label>
 												</div>
-												
+											</form>
 											</div>
 										</div>
 									</div>
-									<button class="btn btn-primary" style="margin-right: 10px;" id="show_all">voir les champ sélectionnez</button>
-									<button class="btn btn-primary" style="margin-right: 10px;" id="hide_all">masquer les champ sélectionnez</button>
+									<button class="btn btn-primary" style="margin-right: 10px;" id="show_all">voir plus</button>
+									<button class="btn btn-primary" style="margin-right: 10px;" id="hide_all">voir moins</button>
 								</div>
 								<div class="table-responsive">
 									<div class="mb-4" >
