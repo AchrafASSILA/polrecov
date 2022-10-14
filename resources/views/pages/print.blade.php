@@ -224,10 +224,15 @@
             if(test === "Email"){
                 $("div.show-email-type-send").show();
                 // $("#Cars" + test).show();
+                $("input[name='sendEmailType']").prop('required',true);
+                $("input[name='to']").prop('required',true);
                 
                 } else{
                     
                     $("div.show-email-type-send").hide();
+                    $("input[name='sendEmailType']").prop('required',false);
+                    $("input[name='to']").prop('required',false);
+                
                 }
 
         });
@@ -236,17 +241,19 @@
                 var d = new Date();
                 var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
                 if(value < strDate){
-                    alert('Date Invalide')
+                    alert('Date Invalide');
+                    this.value = "";
                 }
             })
                 $("input[name$='sendEmailType']").click(function() {
                 var test = $(this).val();
                     if(test === "Different"){
                         $("#different").show();
-                        
+                        $("input[name='dateToSend']").prop('required',true);
                     } else{
                         
                         $("#different").hide();
+                        $("input[name='dateToSend']").prop('required',false);
                     }
 
                 });
