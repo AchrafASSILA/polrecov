@@ -64,8 +64,8 @@
                                                 @if ($user->type === 0)
 												<td>Admin</td>
                                                 
-                                                @elseif($user->type === 1)
-												<td>Viewer</td>
+                                                @elseif($user->type === 2)
+												<td>User</td>
                                                 @else
                                                     
 												<td>Consulter</td>
