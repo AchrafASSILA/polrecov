@@ -188,7 +188,7 @@
                                             @endforeach
 										</tbody>
 									</table>
-									<a target="_blank" href='https://wa.me/212682297143'>Share to WhatsApp </a>
+									<!-- <a target="_blank" href='https://wa.me/212682297143'>Share to WhatsApp </a> -->
 								</div>
 							</div>
 						</div>
