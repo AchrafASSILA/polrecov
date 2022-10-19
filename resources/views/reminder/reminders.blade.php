@@ -29,6 +29,15 @@
 						</button>
 					</div>
 				@endif
+				@if ($errors->any())
+				<div class="alert alert-danger">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+						@endforeach
+					</ul>
+				</div>
+				@endif
 				<!-- row -->
 				<div class="row">
                     <div class="col-xl-12">
@@ -47,6 +56,7 @@
 												<th class="wd-15p border-bottom-0">Souscripteur</th>
 												<th class="wd-15p border-bottom-0">Type d'envoi</th>
 												<th class="wd-15p border-bottom-0">Date D'envoi</th>
+												<th class="wd-15p border-bottom-0">Creer Le</th>
 												<th class="wd-15p border-bottom-0">Releve</th>
 												</thead>
 										<tbody id="tbImpayes">
@@ -56,6 +66,8 @@
 												<td>{{$reminder->isSendToMail ? 'Par Email' : 'Par Whatsapp'}}</td>
 												
 												<td>{{date('d/m/Y', strtotime( $reminder->dateSend))}}</td>
+												<td> {{\Carbon\Carbon::parse(explode(' ', $reminder->created_at)[1])->addHour()->toTimeString()}}</td>
+												
 												@php
 													$name = implode(' / ', array_diff( explode('_',$reminder->fileName),array('Q' , explode('_',$reminder->fileName)[count(explode('_',$reminder->fileName))-1])));
 												@endphp
@@ -69,43 +81,8 @@
 							</div>
 						</div>
 						
-						<button data-toggle="modal" class="btn btn-primary" style="text-align: center" id="generate" >Generer</button>
-						<div class="modal" id="modaldemo8">
-							<div class="modal-dialog modal-dialog-centered" role="document">
-								<div class="modal-content modal-content-demo">
-									<div class="modal-header">
-										<h6 class="modal-title">Comfirmation</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-									</div>
-									<div class="modal-body">
-										<h6>vous voulez generer le relevé ?</h6>
-										{{-- <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p> --}}
-									</div>
-									<div class="modal-footer">
-										<form style="width: 100%;" action="{{route('impayes.store')}}" method="POST" >
-											@csrf
-											{{-- <input type="text" name="impayes_ids" id="generate_all_id"> --}}
-											<button style="margin-bottom: 11px;
-											width: 100%;" class="btn ripple btn-primary" type="submit">Comfirmer</button>
-											
-										</form>	
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal" id="modaldemo9">
-							<div class="modal-dialog modal-dialog-centered" role="document">
-								<div class="modal-content modal-content-demo">
-									<div class="modal-header">
-										<h6 class="modal-title">!!</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-									</div>
-									<div class="modal-body">
-										<h6>selectionez une quittances svp !</h6>
-										{{-- <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p> --}}
-									</div>
-									
-								</div>
-							</div>
-						</div>
+						
+						
 					</div>
 				</div>
 				<!-- row closed -->

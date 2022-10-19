@@ -30,13 +30,22 @@
 						</button>
 					</div>
 				@endif
+				@if ($errors->any())
+				<div class="alert alert-danger">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+						@endforeach
+					</ul>
+				</div>
+				@endif
 				<!-- row -->
 				<div class="row">
                     <div class="col-xl-12">
 						<div class="card">
 							<div class="card-header pb-0">
 								<div class="d-flex justify-content-between">
-									<h4 class="card-title mg-b-0">L'Historique</h4>
+									<h4 class="card-title mg-b-0">Planificateur de messagerie</h4>
 									<i class="mdi mdi-dots-horizontal text-gray"></i>
 								</div>
 								</div>
@@ -48,9 +57,13 @@
 												<th class="wd-15p border-bottom-0">Souscripteur</th>
 												<th class="wd-15p border-bottom-0">Type d'envoi</th>
 												<th class="wd-15p border-bottom-0">Date D'envoi</th>
-												<th class="wd-15p border-bottom-0">Releve</th>
+												<th class="wd-15p border-bottom-0">Creer Le</th>
+												<th class="wd-15p border-bottom-0">Releve</th>\
+												@if (auth()->user()->type === 2 )
+												
 												<th class="wd-15p border-bottom-0">Operation</th>
-												</thead>
+												@endif	
+											</thead>
 										<tbody id="tbImpayes">
 											@foreach ($reminders as $reminder)
 											<tr>
@@ -58,10 +71,13 @@
 												<td>Par Email</td>
 												
 												<td>{{date('d/m/Y', strtotime( $reminder->dateOfLivred))}}</td>
+												<td> {{\Carbon\Carbon::parse(explode(' ', $reminder->created_at)[1])->addHour()->toTimeString()}}</td>
 												@php
 													$name = implode(' / ', array_diff( explode('_',$reminder->fileName),array('Q' , explode('_',$reminder->fileName)[count(explode('_',$reminder->fileName))-1])));
 												@endphp
 												<td>{{  $name}}</td>
+												@if (auth()->user()->type === 2 )
+													
 												<td>
 													<div class="dropdown">
 														<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary" data-toggle="dropdown" id="dropdownMenuButton" type="button">operations<i class="fas fa-caret-down ml-1"></i></button>
@@ -80,7 +96,8 @@
 														</div>
 													</div>
 												</td>
-                                                </tr>
+												@endif
+											</tr>
                                             @endforeach
 										</tbody>
 									</table>

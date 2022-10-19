@@ -20,7 +20,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/subscribers/{name}', [ImpayesController::class, 'getSubscribers'])->middleware('user');
     Route::get('/add-base', [ImpayesController::class, 'addBase'])->name('addBase')->middleware('admin');
     Route::post('/store-base', [ImpayesController::class, 'storeBase'])->name('storeBase')->middleware('admin');
-    Route::get('/schedule-email', [ReminderController::class, 'getScheduleEmail'])->name('scheduleEmail')->middleware('user');
+    Route::get('/schedule-email', [ReminderController::class, 'getScheduleEmail'])->name('scheduleEmail')->middleware('userconsulter');
     Route::get('/contacts/{id}', [SubscriberController::class, 'getContactGroups'])->name('contacts')->middleware('user');
     Route::get('/send-email/{id}', [ReminderController::class, 'sendAnEmailNow'])->name('sendAnEmailNow')->middleware('user');
     Route::get('/get-names/{name}', [ImpayesController::class, 'getAllUniqueNames'])->name('getAllUniqueNames')->middleware('user');

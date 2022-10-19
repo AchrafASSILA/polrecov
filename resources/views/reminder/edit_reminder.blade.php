@@ -54,7 +54,7 @@
 										<input type="text" readonly class="form-control" value="{{$reminder->send_to}}">
 									</div>
 									<div class="form-group">
-										<input type="date" class="form-control" name="date_of_livred" value="{{$reminder->dateOfLivred}}">
+										<input type="date" class="form-control" name="date_of_livred" value="{{explode(' ', $reminder->dateOfLivred)[0]}}">
 									</div>
 									<div class="form-group mb-0 mt-3 justify-content-end">
 										<div>

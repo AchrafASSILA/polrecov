@@ -50,14 +50,14 @@
                         <div class="row mg-b-20">
                             <div class="parsley-input col-md-6" id="fnWrapper">
                                 <label>Name : <span class="tx-danger">*</span></label>
-                                <input class="form-control type mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="name"  type="text">
+                                <input value="{{old('name')}}" class="form-control type mg-b-20"
+                                    data-parsley-class-handler="#lnWrapper"required  name="name"  type="text">
                             </div>
 
                             <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
                                 <label>Email : <span class="tx-danger">*</span></label>
-                                <input class="form-control type mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="email" type="email">
+                                <input value="{{old('email')}}" class="form-control type mg-b-20"
+                                    data-parsley-class-handler="#lnWrapper" required name="email" type="email">
                             </div>
                         </div>
 
@@ -66,21 +66,21 @@
                     <div class="row mg-b-20">
                         <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
                             <label>Password : <span class="tx-danger">*</span></label>
-                            <input class="form-control type mg-b-20" data-parsley-class-handler="#lnWrapper"
-                                name="password"  type="password">
+                            <input value="{{old('password')}}" class="form-control type mg-b-20" data-parsley-class-handler="#lnWrapper"
+                                name="password" required  type="password">
                         </div>
 
                         <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
                             <label>Confirm Password : <span class="tx-danger">*</span></label>
-                            <input class="form-control type mg-b-20" data-parsley-class-handler="#lnWrapper"
-                                name="confirm-password"  type="password">
+                            <input value="{{old('confirm-password')}}" class="form-control type mg-b-20" data-parsley-class-handler="#lnWrapper"
+                                name="confirm-password" required  type="password">
                         </div>
                     </div>
 
                     <div class="row row-sm mg-b-20">
                         <div class="col-12">
                             <label class="form-label">Type : </label>
-                            <select name="type_user" id="select-beast" class="form-control  nice-select  custom-select">
+                            <select value="{{old('type_user')}}"  name="type_user" id="select-beast" class="form-control  nice-select  custom-select">
                                 <option value="0">Admin</option>
                                 <option value="1">Consulter</option>
                                 <option value="2">User</option>

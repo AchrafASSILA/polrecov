@@ -6,7 +6,6 @@
 <link href="{{URL::asset('assets/plugins/datatable/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css')}}" rel="stylesheet">
 
-<link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 @endsection
 @section('page-header')
 				<!-- breadcrumb -->
@@ -56,7 +55,7 @@
 										<div class="dropdown">
 											<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary" data-toggle="dropdown" id="dropdownMenuButton" type="button">Les Champs<i class="fas fa-caret-down ml-1"></i></button>
 											<div  class="dropdown-menu tx-13">
-												<form >
+												<form class="dr" id="dr">
 
 
 												<div class="form-control"  style="border: none">
@@ -123,21 +122,23 @@
 									</div>
 									<button class="btn btn-primary" style="margin-right: 10px;" id="show_all">voir plus</button>
 									<button class="btn btn-primary" style="margin-right: 10px;" id="hide_all">voir moins</button>
+									<button class="btn btn-primary" style="margin-right: 10px;" id="reset">initialiser</button>
 								</div>
 								<div class="table-responsive">
 									<div class="mb-4" >
-										<div class="form-group">
+											
+										<div class="form-group" style="width: 100%;text-align: left;">
 											<label style="width: 100%;text-align: left;" >Souscripteur Nom :</label>
 											<input type="text" aria-controls="example1" class="form-control" style="width: 50%" id="sub" placeholder="Name">
 										</div>
-										<div class="form-group">
+										<div class="form-group" style="width: 100%;text-align: left;">
 											
 											<label style="width: 100%;text-align: left;" for="impayes">Souscripteurs</label>
-											<select name="impayes" id="impayes" style="width:50%" class="form-control select2">
+											<select name="impayes" size="10" id="impayes" style="width:50%" class="form-control">
 												
 											</select>
 										</div>
-										<div class="form-group">
+										<div class="form-group" style="width: 100%;text-align: left;">
 											<label style="width: 100%;text-align: left;" for="subscribers">Groupement</label>
 											<select name="subscribers" id="subscribers" style="width:50%" class="form-control select2">
 												<p class="mg-b-10">Subscribers</p>
@@ -194,14 +195,13 @@
 						</div>
 						
 						<form style="width: 100%;margin-bottom: 10px;display: flex;
-						flex-direction: column-reverse;padding: 10px;
-    border-radius: 5px;background: white;"  action="{{route('impayes.store')}}" method="POST" >
+						flex-direction: column;padding: 10px;
+    border-radius: 5px;background: white;" class="data"  action="{{route('impayes.store')}}" method="POST" >
 							@csrf
-							{{-- <input type="text" name="impayes_ids" id="generate_all_id"> --}}
-							<div >
+							<div style="margin-bottom: 5px">
 
 								<button  class="btn btn-primary" type="button" style="text-align: center" id="generate" >Ajouter a l'etat</button>
-								<button  class="btn btn-primary" type="submit">Générer</button>
+								<button  class="btn btn-primary" disabled id="generate_btn" type="submit">Générer</button>
 							</div>
 								
 						</form>
@@ -215,146 +215,8 @@
 @endsection
 @section('js')
 
-    <script>
 
-		function toggle(source) {
-		checkboxes = document.getElementsByName('quitance_id');
-		checkboxAll = document.getElementById('all');
-		
-		for(var i=0, n=checkboxes.length;i<n;i++) {
-			checkboxes[i].checked = source.checked;
-		}
-		
-		}
-	</script>
-	<script>
-		$(document).ready(function(){
-		// $('#subscribers').hide();
-				$("#sub").on('input', function() {
-				var search =  $(this).val();
-				// alert(search);
-				if(search==""){
-					// $('#subscribers').hide();
-				}else{
-					let parent = search;
-					// $('#subscribers').show();
-					if (search) {
-					$.ajax({
-                        url: "{{ URL::to('admin/get-names') }}/" + parent,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(data) {
-							$('select[name="impayes"]').empty();
-							$('select[name="impayes"]').append('<option value="'+ parent+'">Choisir Un Souscripteur</option>');
-							$.each(data, function(key, value) {
-								$('select[name="impayes"]').append('<option value="' +
-								value + '">' + value + '</option>');
-								
-                            });
-						},
-                    });
-					
-					}else {
-                    console.log('AJAX load did not work');
-                }
-				} 
-				});
-				
-		});
-				$("#impayes").change( function() {
-				var search =  $(this).val();
-					if (search) {
-					$.ajax({
-                        url: "{{ URL::to('admin/subscribers') }}/" + search,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(data) {
-							$('select[name="subscribers"]').empty();
-							$('select[name="subscribers"]').append('<option value="'+ search+'">Choisir Le Pere</option>');
-							$.each(data, function(key, value) {
-								$('select[name="subscribers"]').append('<option value="' +
-								value + '">' + value + '</option>');
-								
-                            });
-						},
-                    });
-					
-					}else {
-                    console.log('AJAX load did not work');
-                }
-				});
-				
-	</script>
-	
-	<script>
-		
-		var fields = [];
-		$(function() {
-			$("#generate").click(function() {
-				$("#example1 input[type=checkbox]:checked").each(function() {
-					if(this.value !== 'on' && jQuery.inArray(this.value,fields) === -1 ){
-						$('form').append('<div  class="form-group" style="display: flex;align-items: center;"><input readonly type="text" class="form-control" name="subs_id[]" id="subs" value="'+this.value+'" /><span style="font-size: 25px;color: #ff6161;cursor: pointer;margin-left: 5px;font-weight: bold;" onclick="removeField(this)">x</span></div>');
-						fields.push(this.value);
-						}else{
-						if(this.value !=='on'){
-							alert('cet élément existe déjà !!');
-						}
-						}
-				
-            });
-		});
-	});
-	$(function() {
-		var checked_cells ;
-			$("#show_all").click(function() {
-				 checked_cells =$('input[name="cells"]:checked');
-				// console.log($('#example1').DataTable().columns().names().length)
-				 if(checked_cells.length>0){
-					
-					$('#example1').DataTable().columns().visible(false);
-					$('#example1').DataTable().column(0).visible(true);
-					checked_cells.each(function() {
-						$('#example1').DataTable().column(this.value).visible(true);
-						
-					});
-				}else{
-					alert('vous devez sélectionner des champs premièrement !!');
-				}
-			});
-			$("#hide_all").click(function() {
-				 checked_cells =$('input[name="cells"]:checked');
-				 if(checked_cells.length>0){
-					 
-					 
-					 $('#example1').DataTable().columns().visible(true);
-					 $('#example1').DataTable().column(0).visible(true);
-					checked_cells.each(function() {
-						
-						$('#example1').DataTable().column(this.value).visible(false);
-					});
-				}else{
-					alert('vous devez sélectionner des champs premièrement !!');
-				}
-			});
-		});
-	function removeField(element){
-			var currentElementValue = element.parentElement.children[0].value;
-			
-			if(confirm('vous voulez vraiment supprimer cet élément ?')){
-				
-				element.parentElement.remove();
-				for(var i=0;i<fields.length;i++){
-					
-					if(fields[i] == currentElementValue){
-						fields.splice(i,1);
-					}
-				}
-			}
-					
-		
-	}	
-</script>
-// <!-- Internal Data tables -->
+ <!-- Internal Data tables -->
 <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
@@ -367,25 +229,76 @@
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js')}}"></script>
 
-<!--Internal  jquery.maskedinput js -->
-<script src="{{URL::asset('assets/plugins/jquery.maskedinput/jquery.maskedinput.js')}}"></script>
- <!--Internal  spectrum-colorpicker js -->
-<script src="{{URL::asset('assets/plugins/spectrum-colorpicker/spectrum.js')}}"></script>
- <!-- Internal Modal js-->
-<script src="{{URL::asset('assets/js/modal.js')}}"></script>
- <!-- Internal Select2 js-->
-<script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
+
  <!--Internal  Datatable js -->
 <script src="{{URL::asset('assets/js/table-data.js')}}"></script>
+
+
+
+
+{{-- app js file  --}}
+<script src="{{URL::asset('assets/js/app.js')}}"></script>
+
+
+
 <script>
-	$('select[name="subscribers"]').on('change', function() {
-	$('input[type="checkbox"]').prop('checked', false)
-                var subsVal = $(this).val();
-                $('#example1').DataTable().search(subsVal).draw();
-            });
-	$('select[name="impayes"]').on('change', function() {
-                var subsVal = $(this).val();
-                $('#example1').DataTable().search(subsVal).draw();
-            });
+
+	$(document).ready(function () {
+    $("#sub").on("input", function () {
+        var search = $(this).val();
+        if (search == "") {
+        	$('select[name="impayes"]').empty();
+        	$('select[name="subscribers"]').empty();
+        	$("#example1").DataTable().search("").draw();
+        } else {
+            let parent = search;
+            if (search) {
+                $.ajax({
+                    url: "{{ URL::to('admin/get-names') }}/" + parent,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $('select[name="impayes"]').empty();
+                        
+                        $.each(data, function (key, value) {
+                            $('select[name="impayes"]').append(
+                                '<option value="' +
+                                    value +
+                                    '">' +
+                                    value +
+                                    "</option>"
+                            );
+                        });
+                    },
+                });
+            } else {
+                console.log("AJAX load did not work");
+            }
+        }
+    });
+});
+$("#impayes").change(function () {
+    var search = $(this).val();
+    if (search) {
+        $.ajax({
+            url: "{{ URL::to('admin/subscribers') }}/" + search,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $('select[name="subscribers"]').empty();
+                $('select[name="subscribers"]').append(
+                    '<option value="' + search + '">Choisir Le Pere</option>'
+                );
+                $.each(data, function (key, value) {
+                    $('select[name="subscribers"]').append(
+                        '<option value="' + value + '">' + value + "</option>"
+                    );
+                });
+            },
+        });
+    } else {
+        console.log("AJAX load did not work");
+    }
+});
 </script>
 @endsection

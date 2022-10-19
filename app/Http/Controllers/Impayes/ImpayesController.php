@@ -11,13 +11,8 @@ use App\Repository\Impayes\ImpayesRepoInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
-use Netflie\WhatsAppCloudApi\Message\Media\LinkID;
-use Netflie\WhatsAppCloudApi\Message\Media\MediaObjectID;
 use PDF;
 
 class ImpayesController extends Controller
@@ -258,7 +253,7 @@ class ImpayesController extends Controller
     {
         return Reminder::create([
             'send_to' => $subscriber_name,
-            'dateOfLivred' => $dateToSend,
+            'dateOfLivred' => $dateToSend . " " . explode(' ', Carbon::now())[1],
             'fileName' => $file_name,
             'message' => $message,
             'file_to_send' => $files_to_send,

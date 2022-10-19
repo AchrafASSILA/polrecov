@@ -36,20 +36,23 @@
         $data_1 = \DB::select('select sum(impayes.prime_total) as "total_prime" , subscribers.raisonsociale from impayes INNER JOIN subscribers on subscribers.raisonsociale = impayes.souscripteur GROUP BY subscribers.raisonsociale ORDER BY total_prime DESC LIMIT 10;');
         $values_1 = [];
         $data_values_1 =''; 
-        foreach ($data_1 as $dt) {
+        foreach (array_reverse( $data_1) as $dt) {
 					$data_values_1 .= '["' . $dt->raisonsociale  .'",   '.$dt->total_prime.'],';
 				}
 				$chart_data_1 = $data_values_1;
 				@endphp
 				<!-- row -->
-				<div id="piechart" style="width: 100%; height: 500px;display:block"></div><br><br>
-        <div id="top_x_div" style="width: 100%; height: 500px"></div><br><br>	
+        <div style="display: flex;justify-content:space-around">
+
+          <div id="piechart" style="width: 48%; height: 500px;margin-rigth:10px"></div>
+          <div id="top_x_div" style="width: 48%; height: 500px"></div>	
+        </div><br><br>
       </div>
 		<!-- Container closed -->
 @endsection
 @section('js')
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>
+  <script>
 	google.charts.load('current', {'packages':['corechart']});
 	google.charts.setOnLoadCallback(drawChart);
 	function drawChart() {
@@ -65,7 +68,7 @@
       };
 		
       
-</script>
+  </script>
    <script type="text/javascript">
       google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawStuff);
@@ -82,7 +85,7 @@
           legend: { position: 'none' },
           chart: { title: '',
                    subtitle: '' },
-          bars: 'vertical', // Required for Material Bar Charts.
+          bars: 'horizontal', // Required for Material Bar Charts.
           axes: {
             x: {
               0: { side: 'top', label: 'Percentage'} // Top x-axis.

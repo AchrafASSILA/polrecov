@@ -17,7 +17,8 @@ class ReminderController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('consulter', ['only' => ['index']]);
+        $this->middleware('userconsulter', ['only' => ['index']]);
+        $this->middleware('user', ['only' => ['store', 'edit', 'update', '', 'sendAnEmailNow']]);
     }
     /**
      * Display a listing of the resource.
@@ -102,7 +103,7 @@ class ReminderController extends Controller
         $reminder = Reminder::find($id);
         // update reminder date to send 
         $now = date('Y-m-d');
-        if ($request->date_of_livred > $now) {
+        if ($request->date_of_livred >= $now) {
 
             $reminder->update([
                 'dateOfLivred' => $request->date_of_livred,
