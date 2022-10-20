@@ -253,7 +253,7 @@ class ImpayesController extends Controller
     {
         return Reminder::create([
             'send_to' => $subscriber_name,
-            'dateOfLivred' => $dateToSend . " " . explode(' ', Carbon::now())[1],
+            'dateOfLivred' => $dateToSend,
             'fileName' => $file_name,
             'message' => $message,
             'file_to_send' => $files_to_send,
