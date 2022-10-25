@@ -41,7 +41,8 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
+            'username' => 'required|string|unique:users',
             'password' => 'required|same:confirm-password',
             'type_user' => 'required',
         ]);
@@ -50,6 +51,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'type' => $request->type_user,
+            'username' => $request->username,
         ]);
         return redirect()->route('users.index')
             ->with('success', 'User a été Ajouter Avec Succes');
@@ -91,25 +93,29 @@ class UserController extends Controller
 
             $this->validate($request, [
                 'name' => 'required',
-                'email' => 'required|email|unique:users,email,' . $id,
+                'email' => 'required|email',
+                'username' => 'required|string|unique:users,username,' . $id,
                 'password' => 'required|same:confirm-password',
                 'type_user' => 'required'
             ]);
             User::find($id)->update([
                 'name' => $request->name,
                 'email' => $request->email,
+                'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'type' => $request->type_user,
             ]);
         } else {
             $this->validate($request, [
                 'name' => 'required',
-                'email' => 'required|email|unique:users,email,' . $id,
+                'email' => 'required|email',
+                'username' => 'required|string|unique:users,username,' . $id,
                 'type_user' => 'required'
             ]);
             User::find($id)->update([
                 'name' => $request->name,
                 'email' => $request->email,
+                'username' => $request->username,
                 'type' => $request->type_user,
             ]);
         }

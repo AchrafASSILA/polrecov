@@ -237,6 +237,7 @@ class ImpayesController extends Controller
                     'dateOfLivred' => Carbon::now(),
                     'fileName' => $file_name,
                     'email_to' => $to,
+                    'user' => auth()->user()->name,
                 ]);
                 return redirect()->route('reminder.index')->with([
                     'success' => 'l\'email a été envoyer avec succès',
@@ -260,6 +261,7 @@ class ImpayesController extends Controller
             'email_to' => $to,
             'cc' => $cc_emails,
             'object' => $object,
+            'user' => auth()->user()->name,
         ]);
     }
     // save releve to pdf file 
@@ -364,10 +366,13 @@ class ImpayesController extends Controller
         // check if there is two word or more 
         if (count(explode(' ', $name)) > 1) {
             $subs_arr = [];
+            $precedent = "";
             foreach (explode(' ', $name) as $n) {
                 // get each $subscriber that have $n 
-                $subscribers[] = Impayes::where('souscripteur', 'like', "%$n%")->pluck('souscripteur');
+                $subscribers[] = Impayes::where('souscripteur', 'like', "%" . $n . "%")->pluck('souscripteur');
+                $precedent  = $n;
             }
+
             // convert subscribers to one dimensional array 
             foreach ($subscribers as $subs) {
                 foreach ($subs as $sub) {
@@ -377,7 +382,7 @@ class ImpayesController extends Controller
             return array_unique(json_decode(json_encode($subs_arr), true));
         } else {
             // case when there is one word in search 
-            $subscribers = Impayes::where('souscripteur', 'like', "%$name%")->pluck('souscripteur');
+            $subscribers = Impayes::where('souscripteur', 'like', "%" . $name . "%")->pluck('souscripteur');
             return array_unique(json_decode(json_encode($subscribers), true));
         }
     }

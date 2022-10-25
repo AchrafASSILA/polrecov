@@ -19,6 +19,9 @@
 					
 				</div>
 				<!-- breadcrumb -->
+				<style>
+					.dataTables_filter, .dataTables_info { display: none; }
+				</style>
 @endsection
 @section('content')
 				@if (session()->has('success'))

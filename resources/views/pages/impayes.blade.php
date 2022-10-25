@@ -18,8 +18,16 @@
 					
 				</div>
 				<!-- breadcrumb -->
+				<style>
+					.dataTables_filter, .dataTables_info { display: none; }
+					table.dataTable thead .sorting_desc::after , table.dataTable thead .sorting_asc::after{
+						display: none
+					}
+				</style>
+				
 @endsection
 @section('content')
+
 				@if (session()->has('success'))
 					<div class="alert alert-success alert-dismissible fade show" role="alert">
 						<strong>{{ session()->get('success') }}</strong>
@@ -120,8 +128,8 @@
 											</div>
 										</div>
 									</div>
-									<button class="btn btn-primary" style="margin-right: 10px;" id="show_all">voir plus</button>
-									<button class="btn btn-primary" style="margin-right: 10px;" id="hide_all">voir moins</button>
+									<button class="btn btn-primary" style="margin-right: 10px;" id="show_all">vue détaillé</button>
+									<button class="btn btn-primary" style="margin-right: 10px;" id="hide_all">vue condoncee</button>
 									<button class="btn btn-primary" style="margin-right: 10px;" id="reset">initialiser</button>
 								</div>
 								<div class="table-responsive">
@@ -146,10 +154,10 @@
 										</div>
 									</div>
 									
-									<table class="table text-md-nowrap" id="example1">
+									<table class="table text-md-nowrap table-striped" id="example1">
 										<thead>
 											<tr>
-												<th  style="    text-align: left;"   class="wd-15p border-bottom-0"><input onClick="toggle(this)"  type="checkbox" name="" id="all"></th>
+												<th  style="text-align: center;padding:0px;width:0px;background:#FFF"   class=" border-bottom-0"><input onClick="toggle(this)"  type="checkbox" name="" id="all"></th>
 												<th    class="wd-15p border-bottom-0">Exercice</th>
 												<th    class="wd-15p border-bottom-0">N*Quittance</th>
 												<th    class="wd-15p border-bottom-0">Cie</th>
@@ -169,22 +177,37 @@
 										<tbody id="tbImpayes">
 											@foreach ($impayes as $impaye)
 											<tr>
-                                                <td  style="text-align: left;" ><input  type="checkbox"  name="quitance_id" value="{{$impaye->quitance}}/{{$impaye->souscripteur}}"></td>
-												<td      >{{$impaye->exercice}}</td>
-												<td     >{{$impaye->quitance}}</td>
-												<td    >{{$impaye->cie}}</td>
-												<td  style="white-space: nowrap; overflow: hidden;width: 180px;height: 30px;text-overflow: ellipsis;" title="{{$impaye->souscripteur}}" >{{ \Illuminate\Support\Str::limit($impaye->souscripteur, 15, $end='...') }}</td>
+                                                <td  style="text-align: left;background:none ; vertical-align: middle;
+												text-align: initial;" ><input  type="checkbox"  name="quitance_id" value="{{$impaye->quitance}}/{{$impaye->souscripteur}}"></td>
+												<td     style="vertical-align: middle;
+														text-align: initial;" >{{$impaye->exercice}}</td>
+												<td    style="vertical-align: middle;
+														text-align: initial;" >{{$impaye->quitance}}</td>
+												<td   style="vertical-align: middle;
+														text-align: initial;" >{{$impaye->cie}}</td>
+												<td  style="white-space: nowrap;vertical-align: middle;
+												text-align: initial;; overflow: hidden;width: 180px;height: 30px;text-overflow: ellipsis;" title="{{$impaye->souscripteur}}" >{{ \Illuminate\Support\Str::limit($impaye->souscripteur, 15, $end='...') }}</td>
 												<td  style="display: none">{{$impaye->souscripteur}}</td>
-												<td    >{{$impaye->branche}}</td>
-												<td    >{{$impaye->categorie}}</td>
-												<td    >{{$impaye->risque}}</td>
-												<td    >{{$impaye->police}}</td>
-												<td    >{{date('d/m/Y', strtotime( $impaye->du))}}</td>
-												<td    >{{date('d/m/Y', strtotime($impaye->au))}}</td>
-												<td    >{{ number_format($impaye->prime_total, 2)}}</td>
-												<td    >{{$impaye->mtt_ancaiss}}</td>
-												<td     >{{$impaye->ref_encaiss}}</td>
-												<td   >{{$impaye->aperiteur}}</td>
+												<td  style="vertical-align: middle;
+														text-align: initial;"  >{{$impaye->branche}}</td>
+												<td  style="vertical-align: middle;
+														text-align: initial;"  >{{$impaye->categorie}}</td>
+												<td  style="vertical-align: middle;
+														text-align: initial;"  >{{$impaye->risque}}</td>
+												<td  style="vertical-align: middle;
+														text-align: initial;"  >{{$impaye->police}}</td>
+												<td  style="vertical-align: middle;
+														text-align: initial;"  >{{date('d/m/Y', strtotime( $impaye->du))}}</td>
+												<td  style="vertical-align: middle;
+														text-align: initial;"  >{{date('d/m/Y', strtotime($impaye->au))}}</td>
+												<td  style="vertical-align: middle;
+														text-align: initial;"  >{{ number_format($impaye->prime_total, 2,'.', ' ')}}</td>
+												<td  style="vertical-align: middle;
+														text-align: initial;"  >{{$impaye->mtt_ancaiss}}</td>
+												<td  style="vertical-align: middle;
+														text-align: initial;"   >{{$impaye->ref_encaiss}}</td>
+												<td style="vertical-align: middle;
+														text-align: initial;"  >{{$impaye->aperiteur}}</td>
                                                 </tr>
                                             @endforeach
 										</tbody>
@@ -193,7 +216,10 @@
 								</div>
 							</div>
 						</div>
-						
+						<style>
+							tr:nth-child(even) {background: rgb(255, 0, 0)}
+							tr:nth-child(odd) {background: #FFF}
+						</style>
 						<form style="width: 100%;margin-bottom: 10px;display: flex;
 						flex-direction: column;padding: 10px;
     border-radius: 5px;background: white;" class="data"  action="{{route('impayes.store')}}" method="POST" >
@@ -201,7 +227,11 @@
 							<div style="margin-bottom: 5px">
 
 								<button  class="btn btn-primary" type="button" style="text-align: center" id="generate" >Ajouter a l'etat</button>
-								<button  class="btn btn-primary" disabled id="generate_btn" type="submit">Générer</button>
+							</div>
+							<div id="data" style="display: flex;
+							flex-direction: column-reverse;">
+
+								<button  style="width: fit-content;margin:auto" class="btn btn-primary" disabled id="generate_btn" type="submit">Générer</button>
 							</div>
 								
 						</form>
@@ -247,9 +277,9 @@
     $("#sub").on("input", function () {
         var search = $(this).val();
         if (search == "") {
-        	$('select[name="impayes"]').empty();
-        	$('select[name="subscribers"]').empty();
-        	$("#example1").DataTable().search("").draw();
+		$('select[name="impayes"]').empty();
+		$('select[name="subscribers"]').empty();
+		$("#example1").DataTable().search("").draw();
         } else {
             let parent = search;
             if (search) {
@@ -300,5 +330,6 @@ $("#impayes").change(function () {
         console.log("AJAX load did not work");
     }
 });
+
 </script>
 @endsection

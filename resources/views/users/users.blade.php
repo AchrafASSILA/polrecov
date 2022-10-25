@@ -19,6 +19,9 @@
 					
 				</div>
 				<!-- breadcrumb -->
+				<style>
+					.dataTables_filter, .dataTables_info { display: none; }
+				</style>
 @endsection
 @section('content')
 				@if (session()->has('success'))
@@ -52,6 +55,7 @@
 											<tr>
 												<th class="wd-10p border-bottom-0">Name</th>
 												<th class="wd-10p border-bottom-0">Email</th>
+												<th class="wd-10p border-bottom-0">Username</th>
 												<th class="wd-10p border-bottom-0">Type</th>
 												<th class="wd-10p border-bottom-0">Creer Le</th>
 												<th class="wd-10p border-bottom-0">Operations</th>
@@ -61,6 +65,7 @@
 											<tr>
                                                 <td>{{$user->name}}</td>
 												<td>{{$user->email}}</td>
+												<td>{{$user->username}}</td>
                                                 @if ($user->type === 0)
 												<td>Admin</td>
                                                 

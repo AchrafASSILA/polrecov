@@ -6,8 +6,8 @@ $(function () {
                 this.value !== "on" &&
                 jQuery.inArray(this.value, fields) === -1
             ) {
-                $("form[class='data']").append(
-                    '<div  class="form-group" style="display: flex;align-items: center;"><input readonly type="text" class="form-control" name="subs_id[]" id="subs" value="' +
+                $("form[class='data'] div[id='data']").append(
+                    '<div  class="form-group" id="div-data" style="display: flex;align-items: center;"><input readonly type="text" class="form-control" name="subs_id[]" id="subs" value="' +
                         this.value +
                         '" /><span style="font-size: 25px;color: #ff6161;cursor: pointer;margin-left: 5px;font-weight: bold;" onclick="removeField(this)">x</span></div>'
                 );
@@ -25,26 +25,16 @@ $(function () {
 $(function () {
     var checked_cells;
     $("#show_all").click(function () {
-        checked_cells = $('input[name="cells"]:checked');
-        // console.log($('#example1').DataTable().columns().names().length)
-        if (checked_cells.length > 0) {
-            $("#example1").DataTable().columns().visible(false);
-            $("#example1").DataTable().column(0).visible(true);
-            checked_cells.each(function () {
-                $("#example1").DataTable().column(this.value).visible(true);
-            });
-        } else {
-            alert("vous devez sélectionner des champs premièrement !!");
-        }
+        $("#example1").DataTable().columns().visible(true);
     });
     $("#hide_all").click(function () {
         checked_cells = $('input[name="cells"]:checked');
         if (checked_cells.length > 0) {
-            $("#example1").DataTable().columns().visible(true);
-            $("#example1").DataTable().column(0).visible(true);
+            $("#example1").DataTable().columns().visible(false);
             checked_cells.each(function () {
-                $("#example1").DataTable().column(this.value).visible(false);
+                $("#example1").DataTable().column(this.value).visible(true);
             });
+            $("#example1").DataTable().column(0).visible(true);
         } else {
             alert("vous devez sélectionner des champs premièrement !!");
         }

@@ -60,7 +60,11 @@
                                 data-parsley-class-handler="#lnWrapper" value='{{$user->email}}' name="email" type="email">
                             </div>
                         </div>
-
+                        <div class="parsley-input col-12 mg-t-20 mg-md-t-0" id="lnWrapper">
+                            <label>Username : <span class="tx-danger">*</span></label>
+                            <input value="{{$user->username}}" class="form-control type mg-b-20"
+                                data-parsley-class-handler="#lnWrapper" required name="username" type="text">
+                        </div>
                     </div>
 
                     <div class="row mg-b-20">

@@ -59,6 +59,11 @@
                                 <input value="{{old('email')}}" class="form-control type mg-b-20"
                                     data-parsley-class-handler="#lnWrapper" required name="email" type="email">
                             </div>
+                            <div class="parsley-input col-12 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                <label>Username : <span class="tx-danger">*</span></label>
+                                <input value="{{old('username')}}" class="form-control type mg-b-20"
+                                    data-parsley-class-handler="#lnWrapper" required name="username" type="text">
+                            </div>
                         </div>
 
                     </div>

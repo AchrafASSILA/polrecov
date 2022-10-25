@@ -49,8 +49,8 @@ class ImpayesRepo implements ImpayesRepoInterface
     // get son from subcribers table 
     public function getSubscribersByParent($name)
     {
-        $impaye = Subscriber::where('raisonsociale', 'like', "%$name%")->get();
-        $subscribers = DB::table("subscribers")->where("groupement", $impaye[0]->compte)->where('compte', '!=', $impaye[0]->compte)->pluck('raisonsociale', 'id');
+        $impaye = Subscriber::where('raisonsociale', 'like', "%$name%")->first();
+        $subscribers = DB::table("subscribers")->where("groupement", $impaye->groupement)->pluck('raisonsociale', 'id');
         return json_encode($subscribers);
     }
     // db view 

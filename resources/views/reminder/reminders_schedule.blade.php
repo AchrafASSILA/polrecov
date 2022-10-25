@@ -56,8 +56,9 @@
 											<tr>
 												<th class="wd-15p border-bottom-0">Souscripteur</th>
 												<th class="wd-15p border-bottom-0">Type d'envoi</th>
-												<th class="wd-15p border-bottom-0">Date D'envoi</th>
+												<th class="wd-15p border-bottom-0">Email</th>
 												<th class="wd-15p border-bottom-0">Creer Le</th>
+												<th class="wd-15p border-bottom-0">User</th>
 												<th class="wd-15p border-bottom-0">Releve</th>\
 												@if (auth()->user()->type === 2 )
 												
@@ -69,9 +70,10 @@
 											<tr>
                                                 <td>{{$reminder->send_to}}</td>
 												<td>Par Email</td>
+                                                <td>{{$reminder->email_to}}</td>
 												
-												<td>{{date('d/m/Y', strtotime( $reminder->dateOfLivred))}}</td>
 												<td> {{\Carbon\Carbon::parse(explode(' ', $reminder->created_at)[1])->addHour()->toTimeString()}}</td>
+												<td>{{  $reminder->user}}</td>
 												@php
 													$name = implode(' / ', array_diff( explode('_',$reminder->fileName),array('Q' , explode('_',$reminder->fileName)[count(explode('_',$reminder->fileName))-1])));
 												@endphp
