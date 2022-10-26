@@ -62,6 +62,7 @@ function toggle(source) {
     for (var i = 0, n = checkboxes.length; i < n; i++) {
         checkboxes[i].checked = source.checked;
     }
+    this.preventDefault();
 }
 $('select[name="subscribers"]').on("change", function () {
     $('input[type="checkbox"]').prop("checked", false);

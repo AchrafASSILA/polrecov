@@ -23,6 +23,49 @@
 					table.dataTable thead .sorting_desc::after , table.dataTable thead .sorting_asc::after{
 						display: none
 					}
+					.first {
+						width: 50%;
+					}
+					.ellipsis {
+						position: relative;
+					}
+					.ellipsis:before {
+						content: ' ';
+						visibility: hidden;
+					}
+					.ellipsis span {
+						position: absolute;
+						left:0;
+						text-align: left;
+						padding-left: 10px;
+						right: 0;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+					.set-display{
+						position: relative;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+					.set-display span{
+						/* display: inline-block; */
+					}
+					table.dataTable thead th[data-is-resizable=true] {
+					border-left: 1px solid transparent;
+					border-right: 1px dashed #bfbfbf;
+					}
+					table.dataTable thead th.dt-colresizable-hover {
+					cursor: col-resize;
+					background-color: #eaeaea;
+					border-left: 1px solid #bfbfbf;
+					}
+					table.dataTable thead th.dt-colresizable-bound-min, 
+					table.dataTable thead th.dt-colresizable-bound-max {
+					opacity: 0.2;
+					cursor: not-allowed !important;
+					}
 				</style>
 				
 @endsection
@@ -125,6 +168,7 @@
 													<label for="ap">Aperiteur</label>
 												</div>
 											</form>
+											
 											</div>
 										</div>
 									</div>
@@ -154,60 +198,44 @@
 										</div>
 									</div>
 									
-									<table class="table text-md-nowrap table-striped" id="example1">
+									<table style="table-layout: fixed;
+									word-wrap: break-word;" class="table text-md-nowrap table-striped" id="example1">
 										<thead>
 											<tr>
-												<th  style="text-align: center;padding:0px;width:0px;background:#FFF"   class=" border-bottom-0"><input onClick="toggle(this)"  type="checkbox" name="" id="all"></th>
-												<th    class="wd-15p border-bottom-0">Exercice</th>
-												<th    class="wd-15p border-bottom-0">N*Quittance</th>
-												<th    class="wd-15p border-bottom-0">Cie</th>
-												<th    class="wd-15p border-bottom-0">Souscripteur</th>
-													<th style="display: none">Souscripteur</th>
-												<th   class="wd-20p border-bottom-0">Branche</th>
-												<th    class="wd-15p border-bottom-0">Categorie</th>
-												<th    class="wd-10p border-bottom-0">Risque</th>
-												<th    class="wd-10p border-bottom-0">Police</th>
-												<th   class="wd-10p border-bottom-0">Du</th>
-												<th    class="wd-10p border-bottom-0">Au</th>
-												<th    class="wd-10p border-bottom-0">Prime</th>
-												<th    class="wd-10p border-bottom-0">Mt Encaiss</th>
-												<th    class="wd-10p border-bottom-0">Ref Encaiss</th>
-												<th class="wd-10p border-bottom-0">Aperiteur</th>
+												<th  class="set-display" style="text-align: center;padding:0px;width:32px;background:#FFF"   class=" border-bottom-0"><span> <input onClick="toggle(this)"   type="checkbox" name="" id="all"></span></th>
+												<th   class="set-display  border-bottom-0"><span> Exercice</span></th>
+												<th   class= "set-display border-bottom-0"><span> N*Quittance</span></th>
+												<th    class="set-display  border-bottom-0"><span> Cie</span></th>
+												<th   class="set-display border-bottom-0"><span> Souscripteur</span></th>
+												<th   class="set-display border-bottom-0"><span> Branche</span></th>
+												<th   class="set-display border-bottom-0"><span> Categorie</span></th>
+												<th   class="set-display border-bottom-0"><span> Risque</span></th>
+												<th   class="set-display border-bottom-0"><span> Police</span></th>
+												<th   class="set-display border-bottom-0"><span> Du</span></th>
+												<th   class="set-display border-bottom-0"><span> Au</span></th>
+												<th   class="set-display border-bottom-0"><span> Prime</span></th>
+												<th   class="set-display border-bottom-0"><span> Mt Encaiss</span></th>
+												<th   class="set-display border-bottom-0"><span> Ref Encaiss</span></th>
+												<th   class="set-display border-bottom-0"><span> Aperiteur</span></th>
 												</thead>
 										<tbody id="tbImpayes">
 											@foreach ($impayes as $impaye)
 											<tr>
-                                                <td  style="text-align: left;background:none ; vertical-align: middle;
-												text-align: initial;" ><input  type="checkbox"  name="quitance_id" value="{{$impaye->quitance}}/{{$impaye->souscripteur}}"></td>
-												<td     style="vertical-align: middle;
-														text-align: initial;" >{{$impaye->exercice}}</td>
-												<td    style="vertical-align: middle;
-														text-align: initial;" >{{$impaye->quitance}}</td>
-												<td   style="vertical-align: middle;
-														text-align: initial;" >{{$impaye->cie}}</td>
-												<td  style="white-space: nowrap;vertical-align: middle;
-												text-align: initial;; overflow: hidden;width: 180px;height: 30px;text-overflow: ellipsis;" title="{{$impaye->souscripteur}}" >{{ \Illuminate\Support\Str::limit($impaye->souscripteur, 15, $end='...') }}</td>
-												<td  style="display: none">{{$impaye->souscripteur}}</td>
-												<td  style="vertical-align: middle;
-														text-align: initial;"  >{{$impaye->branche}}</td>
-												<td  style="vertical-align: middle;
-														text-align: initial;"  >{{$impaye->categorie}}</td>
-												<td  style="vertical-align: middle;
-														text-align: initial;"  >{{$impaye->risque}}</td>
-												<td  style="vertical-align: middle;
-														text-align: initial;"  >{{$impaye->police}}</td>
-												<td  style="vertical-align: middle;
-														text-align: initial;"  >{{date('d/m/Y', strtotime( $impaye->du))}}</td>
-												<td  style="vertical-align: middle;
-														text-align: initial;"  >{{date('d/m/Y', strtotime($impaye->au))}}</td>
-												<td  style="vertical-align: middle;
-														text-align: initial;"  >{{ number_format($impaye->prime_total, 2,'.', ' ')}}</td>
-												<td  style="vertical-align: middle;
-														text-align: initial;"  >{{$impaye->mtt_ancaiss}}</td>
-												<td  style="vertical-align: middle;
-														text-align: initial;"   >{{$impaye->ref_encaiss}}</td>
-												<td style="vertical-align: middle;
-														text-align: initial;"  >{{$impaye->aperiteur}}</td>
+                                                <td  style="text-align: left;background:none ; vertical-align: middle;text-align: initial;" ><input  type="checkbox"  name="quitance_id" value="{{$impaye->quitance}}/{{$impaye->souscripteur}}"></td>
+												<td  class="ellipsis" ><span>{{$impaye->exercice}}</span></td>
+												<td  class="ellipsis" ><span>{{$impaye->quitance}}</span></td>
+												<td  class="ellipsis" ><span>{{$impaye->cie}}</span></td>
+												<td  class="ellipsis" title="{{$impaye->souscripteur}}" ><span>{{$impaye->souscripteur}}</span></td>
+												<td  class="ellipsis" ><span> {{$impaye->branche}}</span></td>
+												<td  class="ellipsis" ><span> {{$impaye->categorie}}</span></td>
+												<td  class="ellipsis"><span>{{$impaye->risque}}</span></td>
+												<td  class="ellipsis" ><span>{{$impaye->police}}</span></td>
+												<td  class="ellipsis" ><span>{{date('d/m/Y', strtotime( $impaye->du))}}</span></td>
+												<td  class="ellipsis"><span>{{date('d/m/Y', strtotime($impaye->au))}}</span></td>
+												<td  class="ellipsis"><span>{{ number_format($impaye->prime_total, 2,'.', ' ')}}</span></td>
+												<td  class="ellipsis"><span>{{$impaye->mtt_ancaiss}}</span></td>
+												<td  class="ellipsis" ><span>{{$impaye->ref_encaiss}}</span></td>
+												<td  class="ellipsis"><span> {{$impaye->aperiteur}}</span></td>
                                                 </tr>
                                             @endforeach
 										</tbody>
@@ -268,6 +296,7 @@
 
 {{-- app js file  --}}
 <script src="{{URL::asset('assets/js/app.js')}}"></script>
+<script src="{{URL::asset('assets/js/resize.js')}}"></script>
 
 
 
