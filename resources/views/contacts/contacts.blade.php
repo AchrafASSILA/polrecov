@@ -62,7 +62,7 @@
 											@foreach ($contacts as $contact)
 											<tr>
                                                 <td><a href="{{route('contacts',$contact->id)}}">{{$contact->raisonsociale}}</a></td>
-												<td>{{$contact->ste_part}}</td>
+												<td style={{$contact->ste_part === 1 ? "color:green" : "color:red"}}>{{ $contact->ste_part === 1 ? "oui" : "non"}}</td>
 												<td>{{$contact->responsable}}</td>
 												<td>{{$contact->telephone}}</td>
 												<td>{{$contact->email}}</td>
