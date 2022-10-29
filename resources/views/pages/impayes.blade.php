@@ -5,6 +5,8 @@
 <link href="{{URL::asset('assets/plugins/datatable/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
 <link href="{{URL::asset('assets/plugins/datatable/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css')}}" rel="stylesheet">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 @endsection
 @section('page-header')
@@ -24,10 +26,11 @@
 						display: none
 					}
 					.first {
-						width: 50%;
+						width: 100%;
 					}
 					.ellipsis {
 						position: relative;
+						width: 70px;
 					}
 					.ellipsis:before {
 						content: ' ';
@@ -48,6 +51,8 @@
 						white-space: nowrap;
 						overflow: hidden;
 						text-overflow: ellipsis;
+						width: 60px;
+						text-align: left;
 					}
 					.set-display span{
 						/* display: inline-block; */
@@ -102,9 +107,12 @@
 								<div style="display: flex;
 								align-items: center;
 								justify-content: center;margin-bottom: 10px;">
+									
+									<button class="btn btn-primary" style="margin-right: 10px;" id="show_all">Vue détaillée</button>
+									<button class="btn btn-primary" style="margin-right: 10px;" id="hide_all">Vue condoncée</button>
 									<div class="form-group" style="margin-bottom: 0px;margin-right: 10px;" >
 										<div class="dropdown">
-											<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary" data-toggle="dropdown" id="dropdownMenuButton" type="button">Les Champs<i class="fas fa-caret-down ml-1"></i></button>
+											<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary" data-toggle="dropdown" id="dropdownMenuButton" type="button">Champs<i class="fas fa-caret-down ml-1"></i></button>
 											<div  class="dropdown-menu tx-13">
 												<form class="dr" id="dr">
 
@@ -128,43 +136,43 @@
 													<label for="sou">Souscripteur</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="br" value="6">
+													<input type="checkbox" name="cells" id="br" value="5">
 													<label for="br">Branche</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="ca" value="7">
+													<input type="checkbox" name="cells" id="ca" value="6">
 													<label for="ca">Categorie</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="ri" value="8">
+													<input type="checkbox" name="cells" id="ri" value="7">
 													<label for="ri">Risque</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="po" value="9">
+													<input type="checkbox" name="cells" id="po" value="8">
 													<label for="po">Police</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="du" value="10">
+													<input type="checkbox" name="cells" id="du" value="9">
 													<label for="du">Du</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="au" value="11">
+													<input type="checkbox" name="cells" id="au" value="10">
 													<label for="au">Au</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="pr" value="12">
+													<input type="checkbox" name="cells" id="pr" value="11">
 													<label for="pr">Prime</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="mt" value="13">
+													<input type="checkbox" name="cells" id="mt" value="12">
 													<label for="mt">Mt Encaiss</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="re" value="14">
+													<input type="checkbox" name="cells" id="re" value="13">
 													<label for="re">Ref Encaiss</label>
 												</div>
 												<div class="form-control" style="border: none">
-													<input type="checkbox" name="cells" id="ap" value="15">
+													<input type="checkbox" name="cells" id="ap" value="14">
 													<label for="ap">Aperiteur</label>
 												</div>
 											</form>
@@ -172,37 +180,31 @@
 											</div>
 										</div>
 									</div>
-									<button class="btn btn-primary" style="margin-right: 10px;" id="show_all">vue détaillé</button>
-									<button class="btn btn-primary" style="margin-right: 10px;" id="hide_all">vue condoncee</button>
-									<button class="btn btn-primary" style="margin-right: 10px;" id="reset">initialiser</button>
+									<button class="btn btn-primary" style="margin-right: 10px;" id="reset">Reset</button>
 								</div>
 								<div class="table-responsive">
 									<div class="mb-4" >
 											
 										<div class="form-group" style="width: 100%;text-align: left;">
 											<label style="width: 100%;text-align: left;" >Souscripteur Nom :</label>
-											<input type="text" aria-controls="example1" class="form-control" style="width: 50%" id="sub" placeholder="Name">
-										</div>
-										<div class="form-group" style="width: 100%;text-align: left;">
-											
-											<label style="width: 100%;text-align: left;" for="impayes">Souscripteurs</label>
-											<select name="impayes" size="10" id="impayes" style="width:50%" class="form-control">
+											<input type="text" aria-controls="example1" class="form-control" style="width: 50%;border-bottom: none" id="sub" placeholder="Name">
+											<select  name="impayes" size="5" id="impayes" style="width:50%;border-top: none;" class="form-control">
 												
 											</select>
 										</div>
-										<div class="form-group" style="width: 100%;text-align: left;">
+										<div class="form-group"  style="width: 100%;text-align: left;">
 											<label style="width: 100%;text-align: left;" for="subscribers">Groupement</label>
-											<select name="subscribers" id="subscribers" style="width:50%" class="form-control select2">
+											<select name="subscribers" disabled id="subscribers" style="width:50%" class="form-control select2">
 												<p class="mg-b-10">Subscribers</p>
 											</select>
 										</div>
 									</div>
 									
 									<table style="table-layout: fixed;
-									word-wrap: break-word;" class="table text-md-nowrap table-striped" id="example1">
+									word-wrap: break-word;width: 100%;" class="table text-md-nowrap table-striped" id="example1">
 										<thead>
 											<tr>
-												<th  class="set-display" style="text-align: center;padding:0px;width:32px;background:#FFF"   class=" border-bottom-0"><span> <input onClick="toggle(this)"   type="checkbox" name="" id="all"></span></th>
+												<th  class="set-display" style="width: 13px;text-align:left;padding-left: 10px;padding-right: 0px;background:#FFF"   class=" border-bottom-0"><span> <input onClick="toggle(this)"   type="checkbox" name="" style="width:13px" id="all"></span></th>
 												<th   class="set-display  border-bottom-0"><span> Exercice</span></th>
 												<th   class= "set-display border-bottom-0"><span> N*Quittance</span></th>
 												<th    class="set-display  border-bottom-0"><span> Cie</span></th>
@@ -222,25 +224,28 @@
 											@foreach ($impayes as $impaye)
 											<tr>
                                                 <td  style="text-align: left;background:none ; vertical-align: middle;text-align: initial;" ><input  type="checkbox"  name="quitance_id" value="{{$impaye->quitance}}/{{$impaye->souscripteur}}"></td>
-												<td  class="ellipsis" ><span>{{$impaye->exercice}}</span></td>
-												<td  class="ellipsis" ><span>{{$impaye->quitance}}</span></td>
-												<td  class="ellipsis" ><span>{{$impaye->cie}}</span></td>
-												<td  class="ellipsis" title="{{$impaye->souscripteur}}" ><span>{{$impaye->souscripteur}}</span></td>
-												<td  class="ellipsis" ><span> {{$impaye->branche}}</span></td>
-												<td  class="ellipsis" ><span> {{$impaye->categorie}}</span></td>
-												<td  class="ellipsis"><span>{{$impaye->risque}}</span></td>
-												<td  class="ellipsis" ><span>{{$impaye->police}}</span></td>
-												<td  class="ellipsis" ><span>{{date('d/m/Y', strtotime( $impaye->du))}}</span></td>
-												<td  class="ellipsis"><span>{{date('d/m/Y', strtotime($impaye->au))}}</span></td>
-												<td  class="ellipsis"><span>{{ number_format($impaye->prime_total, 2,'.', ' ')}}</span></td>
-												<td  class="ellipsis"><span>{{$impaye->mtt_ancaiss}}</span></td>
-												<td  class="ellipsis" ><span>{{$impaye->ref_encaiss}}</span></td>
-												<td  class="ellipsis"><span> {{$impaye->aperiteur}}</span></td>
+												<td  class="ellipsis"  ><span>{{$impaye->exercice}}</span></td>
+												<td  class="ellipsis"  ><span>{{$impaye->quitance}}</span></td>
+												<td  class="ellipsis"  ><span>{{$impaye->cie}}</span></td>
+												<td  class="ellipsis"  title="{{$impaye->souscripteur}}" ><span>{{$impaye->souscripteur}}</span></td>
+												<td  class="ellipsis"  ><span> {{$impaye->branche}}</span></td>
+												<td  class="ellipsis"  ><span> {{$impaye->categorie}}</span></td>
+												<td  class="ellipsis" ><span>{{$impaye->risque}}</span></td>
+												<td  class="ellipsis"  ><span>{{$impaye->police}}</span></td>
+												<td  class="ellipsis"  ><span>{{date('d/m/Y', strtotime( $impaye->du))}}</span></td>
+												<td  class="ellipsis" ><span>{{date('d/m/Y', strtotime($impaye->au))}}</span></td>
+												<td  class="ellipsis" ><span>{{ number_format($impaye->prime_total, 2,'.', ' ')}}</span></td>
+												<td  class="ellipsis" ><span>{{$impaye->mtt_ancaiss}}</span></td>
+												<td  class="ellipsis"  ><span>{{$impaye->ref_encaiss}}</span></td>
+												<td  class="ellipsis" ><span> {{$impaye->aperiteur}}</span></td>
                                                 </tr>
                                             @endforeach
 										</tbody>
 									</table>
-									<!-- <a target="_blank" href='https://wa.me/212682297143'>Share to WhatsApp </a> -->
+									<div style="margin-bottom: 5px;text-align: left">
+
+										<button  class="btn btn-primary" type="button" style="text-align: center" id="generate" >Ajouter a l'etat</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -252,10 +257,7 @@
 						flex-direction: column;padding: 10px;
     border-radius: 5px;background: white;" class="data"  action="{{route('impayes.store')}}" method="POST" >
 							@csrf
-							<div style="margin-bottom: 5px">
-
-								<button  class="btn btn-primary" type="button" style="text-align: center" id="generate" >Ajouter a l'etat</button>
-							</div>
+							
 							<div id="data" style="display: flex;
 							flex-direction: column-reverse;">
 
@@ -308,6 +310,7 @@
         if (search == "") {
 		$('select[name="impayes"]').empty();
 		$('select[name="subscribers"]').empty();
+		$('#subscribers').prop("disabled", true);
 		$("#example1").DataTable().search("").draw();
         } else {
             let parent = search;
@@ -339,6 +342,7 @@
 $("#impayes").change(function () {
     var search = $(this).val();
     if (search) {
+		$('#subscribers').prop("disabled", false);
         $.ajax({
             url: "{{ URL::to('admin/subscribers') }}/" + search,
             type: "GET",
@@ -356,6 +360,7 @@ $("#impayes").change(function () {
             },
         });
     } else {
+		$('#subscribers').prop("disabled", true);
         console.log("AJAX load did not work");
     }
 });

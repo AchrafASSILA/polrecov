@@ -57,10 +57,11 @@
 												<th class="wd-15p border-bottom-0">Souscripteur</th>
 												<th class="wd-15p border-bottom-0">Type d'envoi</th>
 												<th class="wd-15p border-bottom-0">Email</th>
+												<th class="wd-15p border-bottom-0">Date Planifier</th>
 												<th class="wd-15p border-bottom-0">Creer Le</th>
 												<th class="wd-15p border-bottom-0">User</th>
-												<th class="wd-15p border-bottom-0">Releve</th>\
-												@if (auth()->user()->type === 2 )
+												<th class="wd-15p border-bottom-0">Releve</th>
+												@if (auth()->user()->type === 2 ||auth()->user()->type === 4 )
 												
 												<th class="wd-15p border-bottom-0">Operation</th>
 												@endif	
@@ -71,6 +72,7 @@
                                                 <td>{{$reminder->send_to}}</td>
 												<td>Par Email</td>
                                                 <td>{{$reminder->email_to}}</td>
+                                                <td>{{$reminder->dateOfLivred}}</td>
 												
 												<td> {{\Carbon\Carbon::parse(explode(' ', $reminder->created_at)[1])->addHour()->toTimeString()}}</td>
 												<td>{{  $reminder->user}}</td>
@@ -78,12 +80,16 @@
 													$name = implode(' / ', array_diff( explode('_',$reminder->fileName),array('Q' , explode('_',$reminder->fileName)[count(explode('_',$reminder->fileName))-1])));
 												@endphp
 												<td>{{  $name}}</td>
-												@if (auth()->user()->type === 2 )
-													
+												@if (auth()->user()->type === 2 ||auth()->user()->type === 4 )
+												
 												<td>
 													<div class="dropdown">
 														<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary" data-toggle="dropdown" id="dropdownMenuButton" type="button">operations<i class="fas fa-caret-down ml-1"></i></button>
 														<div  class="dropdown-menu tx-13">
+															@php
+															$file_path = asset( "../storage/releve") ."/"  . $reminder->fileName . ".pdf";
+															@endphp
+															<a class="" style="padding: 8px 15px;width:100%;height:43px;text-decoration:none;" target="_blank"  href="{{$file_path}}">Ouvrir</a>
 															<a class="dropdown-item" style="padding: 8px 15px;width:100%;height:43px;" href="{{route('reminder.edit',$reminder->id)}}">Modifier La date</a>
 															<a class="dropdown-item" style="padding: 8px 15px;width:100%;height:43px;" href="{{route('sendAnEmailNow',$reminder->id)}}">Envoyer maintenant</a>
 															<form class="dropdown-item" style="display: inline-block;" action="{{route('reminder.destroy',$reminder->id)}}" method="post">

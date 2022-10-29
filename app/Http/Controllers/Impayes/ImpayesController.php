@@ -178,13 +178,14 @@ class ImpayesController extends Controller
         $subscriber_principale = $vars[2];
 
         // get subs name from subscriber_principale 
-        $subscriber_name = $subscriber_principale[0]['raisonsociale'];
+        // $subscriber_name = $subscriber_principale[0]['raisonsociale'];
+        $subscriber_name = implode(" ", array_unique($vars[3]));
 
         // create the generated file name 
         $file_name = 'Q_' . implode('_', array_unique($this->strucuteredSubs($request)[3])) . '_' . time();
 
         // generate file 
-        $this->generatePdf($request, $receipts, $file_name);
+        return $this->generatePdf($request, $receipts, $file_name);
         // check if method of send == whatsapp 
         if ($request->sendType == 'Whatsaap') {
             $number = "212" . ltrim($request->number, '0');
@@ -273,8 +274,8 @@ class ImpayesController extends Controller
             Artisan::call('emails:send');
             view()->share('receipts', $receipts);
             $file = $file_name . '.pdf';
-            $pdf = PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->save(public_path('storage\releve\\' . $file));
-            // return PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->stream();
+            // $pdf = PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->save(public_path('storage\releve\\' . $file));
+            return PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->stream();
             file_put_contents('D:\test\\' . $file, $pdf->output());
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);

@@ -15,17 +15,19 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
     .total span:nth-child(2){
         padding-right: 10px;
     }
+
     .total span{
     padding: 5px 20px;
     border: 1px solid #e3e8f7;
     }</style>
 @endsection
 @section('title')
-    معاينه طباعة الفاتورة
+    
 @stop
 @section('page-header')
     <!-- breadcrumb -->
@@ -84,7 +86,7 @@
                                         <td >{{$receipt->categorie }}</td>
                                         <td style="text-align: center" >{{date('m/d/Y', strtotime( $receipt->du))}}</td>
                                         <td style="text-align: center" >{{date('m/d/Y', strtotime( $receipt->au))}}</td>
-                                        <td style="text-align: right" >{{ number_format($receipt->prime_total, 2)}}</td> 
+                                        <td style="text-align: right" >{{ number_format($receipt->prime_total, 2,'.',' ')}}</td> 
                                         @if (in_array( $receipt->quitance,$files_quittances))
                                         <td style="text-align: center" ><input type="checkbox"  value="{{'Q_'.$receipt->quitance.'.pdf'}}" class="box1" ></td> 
                                             
@@ -123,7 +125,7 @@
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content modal-content-demo">
 									<div class="modal-header">
-										<h6 class="modal-title">Confirmation</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+										<h6 class="modal-title">Méthode d'envoi</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
 									</div>
 									<div class="modal-body">
 										<h6>Choisissez une méthode d'envoi ?</h6>
@@ -159,32 +161,65 @@
                                                     
                                                     <label for="" >Date d'envoi : </label><br>
                                                     <input class="form-control"  type="date"   name="dateToSend" >
+                                                    <span id="error" style="text-align: center;
+                                                    width: 100%;
+                                                    display: none;
+                                                    background: #DC4C64;
+                                                    color: white;
+                                                    padding: 5px 10px;
+                                                    margin-top: 5px;
+                                                    border-radius: 3px;">date invalid</span>
                                                 </div>
-                                                
-                                                <label for="" >Emails Cc : </label><br>
-                                                
-                                                    
-                                                    <div id="cc">
-                                                        <input class="form-control"  type="text" id="emails_cc" name="cc_email[]" >
-                                                        <div style="margin-top: 10px;
-                                                        margin-bottom: 10px;
-                                                        text-align: right;">
-
-                                                            <button type="button" class="btn btn-primary" id="add_cc">ajouter</button>
-                                                        </div>
-                                                    </div>
                                                 <label for="" >Email de Souscripteur : </label><br>
                                                 
                                                     
                                                     <div >
                                                         <input class="form-control"  type="text" id="to" name="to" value="{{$subscriber_principale[0]->email}}">
                                                     </div>
+                                                <label for="" >Emails Cc : </label><br>
+                                                
+                                                    
+                                                    <div id="cc">
+                                                        <div class="grp" style="display: flex;
+                                                        justify-content: center;
+                                                        align-items: center;">
+
+                                                            <input class="form-control"  type="text" id="emails_cc" name="cc_email[]" >
+                                                            <div style="margin-top: 10px;
+                                                        margin-bottom: 10px;
+                                                        text-align: right;">
+
+                                                        <button type="button" class="btn btn-primary" style="margin-left: 5px" id="add_cc">ajouter</button>
+                                                        </div>
+                                                        </div>
+                                                        <span id="error_add" style="text-align: center;
+                                                    width: 100%;
+                                                    display: none;
+                                                    background: #DC4C64;
+                                                    color: white;
+                                                    padding: 5px 10px;
+                                                    margin-top: 5px;
+                                                    margin-bottom: 5px;
+                                                    border-radius: 3px;">element deja existe</span>
+                                                    <span id="error_empty" style="text-align: center;
+                                                    width: 100%;
+                                                    display: none;
+                                                    background: #DC4C64;
+                                                    color: white;
+                                                    padding: 5px 10px;
+                                                    margin-top: 5px;
+                                                    margin-bottom: 5px;
+                                                    border-radius: 3px;">entre un email</span>
+                                                    
+                                                    </div>
+                                                    
+                                                
                                                     <div >
-                                                        <label style="margin-top: 10px;"  for="subject" >Subject : </label><br>
+                                                        <label style="margin-top: 10px;"  for="subject" >Objet : </label><br>
                                                         <input class="form-control"  type="text" id="subject"  name="message" >
                                                     </div>
                                                     <div >
-                                                        <label style="margin-top: 10px;"  for="object" >Object : </label><br>
+                                                        <label style="margin-top: 10px;"  for="object" >Message (additionnel) : </label><br>
                                                         <input class="form-control"  type="text" id="object"  name="object" >
                                                     </div>
                                             </div>
@@ -200,9 +235,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
-                                
-                                
+						</div>        
                             </div>
                 </div>
             </div>
@@ -213,6 +246,11 @@
     <!-- Container closed -->
     </div>
     <!-- main-content closed -->
+    <style>
+            .swal-overlay .swal-overlay--show-modal {
+        z-index: {X};
+    }
+    </style>
 @endsection
 @section('js')
     <!-- Internal Modal js-->
@@ -237,11 +275,12 @@
 
         });
             $('input[name="dateToSend"]').change(function(){
+                $("#error").css("display",'none');
                 var value = this.value;
                 var d = new Date();
                 var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
                 if(value < strDate){
-                    alert('Date Invalide');
+                    $("#error").css("display",'block');
                     this.value = "";
                 }
             })
@@ -287,16 +326,24 @@
 		$(function() {
 			$("#add_cc").click(function() {
 				
+                $('#error_add').css("display","none");
+                $('#error_empty').css("display","none");
                 var input_email_cc = $('#emails_cc').val(); 
-                // alert(input_email_cc);
-					if(jQuery.inArray(input_email_cc,fields) === -1 ){
+                // swal(input_email_cc);
+                if(input_email_cc ){
+
+                    if(jQuery.inArray(input_email_cc,fields) === -1 ){
                         $('#cc').append('<div  class="form-group" style="display: flex;align-items: center;"><input readonly type="text" class="form-control" name="cc_emails[]"  value="'+input_email_cc+'" /><span style="font-size: 25px;color: #ff6161;cursor: pointer;margin-left: 5px;font-weight: bold;" onclick="removeField(this)">x</span></div>');
 						fields.push(input_email_cc);
-						}else{
+                    }else{
+                        
+                        $('#error_add').css("display","block");
 						
-							alert('cet élément existe déjà !!');
-						
-						}
+                    }
+                }else{
+
+                    $('#error_empty').css("display","block");
+                }
 				
            
 		});

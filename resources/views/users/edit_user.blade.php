@@ -90,15 +90,15 @@
                                 @if ($user->type == 0)
                                 <option value="0" selected>Admin</option>
                                 <option value="2" >User</option>
-                                <option value="1" >Consulter</option>
+                                <option value="1" >Viewer</option>
                                 @elseif ($user->type == 2)
                                 <option value="0" >Admin</option>
                                 <option value="2" selected>User</option>
-                                <option value="1" >Consulter</option>
+                                <option value="1" >Viewer</option>
                                 @else
                                 <option value="0" >Admin</option>
                                 <option value="2" >User</option>
-                                <option value="1" selected>Consulter</option>
+                                <option value="1" selected>Viewer</option>
                                 @endif
                             </select>
                         </div>

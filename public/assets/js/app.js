@@ -15,7 +15,7 @@ $(function () {
                 $("#generate_btn").prop("disabled", false);
             } else {
                 if (this.value !== "on") {
-                    alert("cet élément existe déjà !!");
+                    swal("cet élément existe déjà !!");
                 }
             }
         });
@@ -36,7 +36,7 @@ $(function () {
             });
             $("#example1").DataTable().column(0).visible(true);
         } else {
-            alert("vous devez sélectionner des champs premièrement !!");
+            swal("vous devez sélectionner des champs premièrement !!");
         }
     });
 });
@@ -85,4 +85,5 @@ $("#reset").click(function () {
     $('select[name="subscribers"]').empty();
     $("#example1").DataTable().columns().visible(true);
     $("#generate_btn").prop("disabled", true);
+    $("#subscribers").prop("disabled", true);
 });

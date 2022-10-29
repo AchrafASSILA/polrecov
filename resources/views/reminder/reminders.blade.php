@@ -59,6 +59,7 @@
 												<th class="wd-15p border-bottom-0">Email</th>
 												<th class="wd-15p border-bottom-0">User</th>
 												<th class="wd-15p border-bottom-0">Releve</th>
+												<th class="wd-15p border-bottom-0">Ouvrir relevé</th>
 												</thead>
 										<tbody id="tbImpayes">
 											@foreach ($reminders as $reminder)
@@ -74,7 +75,12 @@
 													$name = implode(' / ', array_diff( explode('_',$reminder->fileName),array('Q' , explode('_',$reminder->fileName)[count(explode('_',$reminder->fileName))-1])));
 												@endphp
 												<td>{{  $name}}</td>
-												
+												<td>
+													@php
+													$file_path = asset( "../storage/releve") ."/"  . $reminder->fileName . ".pdf";
+													@endphp
+													<a class="" style="padding: 8px 15px;width:100%;height:43px;text-decoration:none;" target="_blank"  href="{{$file_path}}">Ouvrir</a>
+													</td>
                                                 </tr>
                                             @endforeach
 										</tbody>

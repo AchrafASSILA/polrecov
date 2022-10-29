@@ -87,7 +87,7 @@
                             <label class="form-label">Type : </label>
                             <select value="{{old('type_user')}}"  name="type_user" id="select-beast" class="form-control  nice-select  custom-select">
                                 <option value="0">Admin</option>
-                                <option value="1">Consulter</option>
+                                <option value="1">Viewer</option>
                                 <option value="2">User</option>
 
                             </select>
