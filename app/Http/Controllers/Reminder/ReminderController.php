@@ -145,10 +145,10 @@ class ReminderController extends Controller
                 // send this reminder now 
                 if (strlen($emails_to_send[0]) > 0) {
                     // return "yes";
-                    Mail::to($reminder->email_to)->cc($emails_to_send)->send(new MailReceipt($reminder->fileName, $files_to_send, $reminder->message, $reminder->object));
+                    Mail::to($reminder->email_to)->cc($emails_to_send)->send(new MailReceipt($reminder->fileName, $files_to_send, $reminder->message, $reminder->object, $reminder->default_message));
                 } else {
                     // return "no";
-                    Mail::to($reminder->email_to)->send(new MailReceipt($reminder->fileName, $files_to_send, $reminder->message, $reminder->object));
+                    Mail::to($reminder->email_to)->send(new MailReceipt($reminder->fileName, $files_to_send, $reminder->message, $reminder->object, $reminder->default_message));
                 }
                 $reminder->update([
                     'isSendToMail' => 1,

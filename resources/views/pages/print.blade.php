@@ -222,6 +222,16 @@
                                                         <label style="margin-top: 10px;"  for="object" >Message (additionnel) : </label><br>
                                                         <input class="form-control"  type="text" id="object"  name="object" >
                                                     </div>
+                                                    <div >
+                                                        <label style="margin-top: 10px;"  for="default_object" >Default message : </label><br>
+                                                        <div style="display: flex;
+                                                        justify-content: center;
+                                                        align-items: center;">
+
+                                                            <textarea class="form-control"  id="default_object" style="display: none;height:40px" type="text"  id="default_object"  name="default_object" >Bonjour C'est Polassur Merci De Lire L'appel Suivante</textarea>
+                                                        <button type="button" onclick="showDefaultObject()" class="btn btn-primary" id="show_default_object" style="margin-left: auto;padding: 7px 20px;"><i style="font-size: 24px;" class="la la-pencil"></i></button>
+                                                        </div>
+                                                    </div>
                                             </div>
                                             @foreach ($quitances as $impay)
                                                 
@@ -348,6 +358,12 @@
            
 		});
 	});
+    function showDefaultObject(){
+        let btn = document.getElementById('show_default_object');
+        let input = document.getElementById('default_object');
+        input.style.display='block';
+        btn.style.marginLeft='5px';
+    }
     function removeField(element){
 			var currentElementValue = element.parentElement.children[0].value;
 			

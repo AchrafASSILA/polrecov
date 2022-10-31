@@ -24,7 +24,7 @@ class Impayes extends Model
         'mtt_ancaiss',
         'ref_encaiss',
         'aperiteur',
-        'prime_total'
+        'prime_total',
     ];
 
 

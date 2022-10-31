@@ -34,6 +34,7 @@ class ImpayesImport implements ToModel, WithHeadingRow
             'mtt_ancaiss' => $row["mtt_encaiss"] ?? null,
             'ref_encaiss' => $row["ref_encaiss"] ?? null,
             'aperiteur' => $row["aperiteur"] ?? null,
+            // 'id_client' => $row["aperiteur"] ?? null,
         ]);
     }
 }

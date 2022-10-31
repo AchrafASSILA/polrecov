@@ -8,7 +8,7 @@
 				<div class="breadcrumb-header justify-content-between">
 					<div class="my-auto">
 						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">Les Bases</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ Ajouter une base</span>
+							<h4 class="content-title mb-0 my-auto">Les Bases</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ Ajouter la base impayes</span>
 						</div>
 					</div>
 				</div>
@@ -27,7 +27,7 @@
 				<!-- row -->
 				<div class="row">
                     <div class="col-sm-12 col-md-12">
-                        <form action="{{route('storeBase')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('storeBaseImpayes')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="file"  required name="excelFile" class="dropify" accept=".xlsx , .xls"
                             data-height="70" />

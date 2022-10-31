@@ -89,7 +89,8 @@
 															@php
 															$file_path = asset( "../storage/releve") ."/"  . $reminder->fileName . ".pdf";
 															@endphp
-															<a class="" style="padding: 8px 15px;width:100%;height:43px;text-decoration:none;" target="_blank"  href="{{$file_path}}">Ouvrir</a>
+															<a class="" style="padding: 8px 15px;width:100%;height:43px;text-decoration:none;" target="_blank"  href="{{$file_path}}">
+																<i class="far fa-eye"></i></a>
 															<a class="dropdown-item" style="padding: 8px 15px;width:100%;height:43px;" href="{{route('reminder.edit',$reminder->id)}}">Modifier La date</a>
 															<a class="dropdown-item" style="padding: 8px 15px;width:100%;height:43px;" href="{{route('sendAnEmailNow',$reminder->id)}}">Envoyer maintenant</a>
 															<form class="dropdown-item" style="display: inline-block;" action="{{route('reminder.destroy',$reminder->id)}}" method="post">

@@ -338,8 +338,6 @@
             }
         }
     });
-});
-$("#impayes").change(function () {
     var search = $(this).val();
     if (search) {
 		$('#subscribers').prop("disabled", false);

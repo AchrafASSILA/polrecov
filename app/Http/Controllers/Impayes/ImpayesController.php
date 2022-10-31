@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Impayes;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ContactImport;
+use App\Imports\ImpayesImport;
+use App\Imports\ImpayesSubsImport;
 use App\Mail\MailReceipt;
 use App\Models\Impayes\Impayes;
 use App\Models\Reminder\Reminder;
@@ -12,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
 use PDF;
 
@@ -185,7 +189,7 @@ class ImpayesController extends Controller
         $file_name = 'Q_' . implode('_', array_unique($this->strucuteredSubs($request)[3])) . '_' . time();
 
         // generate file 
-        return $this->generatePdf($request, $receipts, $file_name);
+        $this->generatePdf($request, $receipts, $file_name);
         // check if method of send == whatsapp 
         if ($request->sendType == 'Whatsaap') {
             $number = "212" . ltrim($request->number, '0');
@@ -211,6 +215,7 @@ class ImpayesController extends Controller
             } else {
                 $cc_emails = "";
             }
+            $default_object =  $request->default_object;
             // get email object 
             $object = $request->object;
             // get send to email 
@@ -221,7 +226,7 @@ class ImpayesController extends Controller
                 if ($dateToSend > $now) {
 
 
-                    $this->sendInDifferenetdate($subscriber_name, $dateToSend, $file_name, $message, $request->files_to_send, $to, $cc_emails, $object);
+                    $this->sendInDifferenetdate($subscriber_name, $dateToSend, $file_name, $message, $request->files_to_send, $to, $cc_emails, $object, $default_object);
                     return redirect()->route('scheduleEmail')->with([
                         'success' => 'l\'email a été planifier avec succès',
                     ]);
@@ -230,7 +235,7 @@ class ImpayesController extends Controller
                 }
             } else {
                 $cc_emails =  array_unique(explode(',', $cc_emails));
-                $this->sendEmail($to, $file_name, $files_to_send, $request->message, $cc_emails, $object);
+                $this->sendEmail($to, $file_name, $files_to_send, $request->message, $cc_emails, $object, $default_object);
                 Reminder::create([
                     'send_to' => $subscriber_name,
                     'isSendToMail' => 1,
@@ -251,7 +256,7 @@ class ImpayesController extends Controller
         // }
     }
     // send email in different date 
-    public function sendInDifferenetdate($subscriber_name, $dateToSend, $file_name, $message, $files_to_send, $to, $cc_emails, $object)
+    public function sendInDifferenetdate($subscriber_name, $dateToSend, $file_name, $message, $files_to_send, $to, $cc_emails, $object, $default_message)
     {
         return Reminder::create([
             'send_to' => $subscriber_name,
@@ -262,6 +267,7 @@ class ImpayesController extends Controller
             'email_to' => $to,
             'cc' => $cc_emails,
             'object' => $object,
+            'default_message' => $default_message,
             'user' => auth()->user()->name,
         ]);
     }
@@ -274,21 +280,21 @@ class ImpayesController extends Controller
             Artisan::call('emails:send');
             view()->share('receipts', $receipts);
             $file = $file_name . '.pdf';
-            // $pdf = PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->save(public_path('storage\releve\\' . $file));
-            return PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->stream();
+            $pdf = PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->save(public_path('storage\releve\\' . $file));
+            // return PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->stream();
             file_put_contents('D:\test\\' . $file, $pdf->output());
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
     // send to email 
-    public function sendEmail($subscriber_email, $file, $files_to_send = '', $subject, $cc, $object)
+    public function sendEmail($subscriber_email, $file, $files_to_send = '', $subject, $cc, $object, $default_object)
     {
         if (strlen($cc[0]) > 0) {
-            Mail::to($subscriber_email)->cc(array_unique($cc))->send(new MailReceipt($file, $files_to_send, $subject, $object));
+            Mail::to($subscriber_email)->cc(array_unique($cc))->send(new MailReceipt($file, $files_to_send, $subject, $object, $default_object));
         } else {
             // send email 
-            Mail::to($subscriber_email)->send(new MailReceipt($file, $files_to_send, $subject, $object));
+            Mail::to($subscriber_email)->send(new MailReceipt($file, $files_to_send, $subject, $object, $default_object));
         }
     }
 
@@ -337,13 +343,18 @@ class ImpayesController extends Controller
     }
 
     // db view 
-    public function addBase()
+    public function addBaseImpayes()
     {
-        return view('pages.add_base');
+        return view('pages.add_base_impayes');
+    }
+    // db view 
+    public function addBaseContact()
+    {
+        return view('pages.add_base_contact');
     }
 
     // db stored 
-    public function storeBase(Request $request)
+    public function storeBaseImpayes(Request $request)
     {
         // call the command emails send 
         Artisan::call('emails:send');
@@ -353,7 +364,31 @@ class ImpayesController extends Controller
                 'excelFile' => 'required|mimes:xlsx,xls',
             ]);
             // call the function transformExcelFileToMysqlData  that stored excel file data in mysql 
-            $this->Impayes->transformExcelFileToMysqlData($request);
+            Impayes::truncate();
+            $path = $request->file('excelFile');
+            // Excel::import(new ImpayesImport, $path);
+            Excel::import(new ImpayesSubsImport, $path);
+            return redirect()->route('impayes.index')->with([
+                'success' => 'la base a été insérer avec succes',
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+    // db stored 
+    public function storeBaseContact(Request $request)
+    {
+        // call the command emails send 
+        Artisan::call('emails:send');
+        try {
+            //code...
+            $request->validate([
+                'excelFile' => 'required|mimes:xlsx,xls',
+            ]);
+            // call the function transformExcelFileToMysqlData  that stored excel file data in mysql 
+            Subscriber::truncate();
+            $path = $request->file('excelFile');
+            Excel::import(new ContactImport, $path);
             return redirect()->route('impayes.index')->with([
                 'success' => 'la base a été insérer avec succes',
             ]);
@@ -364,27 +399,8 @@ class ImpayesController extends Controller
     // get all impayes unique name
     public function getAllUniqueNames($name)
     {
-        // check if there is two word or more 
-        if (count(explode(' ', $name)) > 1) {
-            $subs_arr = [];
-            $precedent = "";
-            foreach (explode(' ', $name) as $n) {
-                // get each $subscriber that have $n 
-                $subscribers[] = Impayes::where('souscripteur', 'like', "%" . $n . "%")->pluck('souscripteur');
-                $precedent  = $n;
-            }
-
-            // convert subscribers to one dimensional array 
-            foreach ($subscribers as $subs) {
-                foreach ($subs as $sub) {
-                    $subs_arr[] = $sub;
-                }
-            }
-            return array_unique(json_decode(json_encode($subs_arr), true));
-        } else {
-            // case when there is one word in search 
-            $subscribers = Impayes::where('souscripteur', 'like', "%" . $name . "%")->pluck('souscripteur');
-            return array_unique(json_decode(json_encode($subscribers), true));
-        }
+        $field = '%' . implode('%', explode(' ', $name)) . '%';
+        $subscribers = Impayes::where('souscripteur', 'like', $field)->pluck('souscripteur');
+        return array_unique(json_decode(json_encode($subscribers), true));
     }
 }

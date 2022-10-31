@@ -22,13 +22,23 @@
 {{-- select count(impayes.id) as "total_count" , subscribers.raisonsociale from impayes INNER JOIN subscribers on subscribers.raisonsociale = impayes.souscripteur GROUP BY subscribers.raisonsociale ORDER BY total_count DESC LIMIT 10; --}}
 {{-- select sum(impayes.prime_total) as "total_prime" , subscribers.raisonsociale from impayes INNER JOIN subscribers on subscribers.raisonsociale = impayes.souscripteur GROUP BY subscribers.raisonsociale ORDER BY total_prime DESC LIMIT 10; --}}
       @php
-				$data = \App\Models\Impayes\Impayes::select('branche', \DB::raw('count(*) as impayes_total'))
-				->groupBy('branche')
-				->get();
-				$data_values ="";
+				$data = \DB::select("select count(*) as impayes_total , SUM(impayes.prime_total) prime_tot , impayes.branche  FROM impayes 
+                where impayes.branche = 'D.I.M' 
+                or impayes.branche = 'accidents de travail' 
+                or impayes.branche = 'AUTO CYCLO' 
+                or impayes.branche = 'AUTO FLOTTE'
+                or impayes.branche = 'AUTO PARTICULIERS'
+                or impayes.branche = 'AUTO SOCIETES'
+                or impayes.branche = 'AUTO SOCIETES'
+                or impayes.branche = 'CARTE VERTE AUTO' 
+                or impayes.branche = 'ASSISTANCE ETUDIANT À L\'ETRANGER'
+                or impayes.branche = 'ASSISTANCE SCOLAIRE' GROUP BY impayes.branche  ORDER BY impayes_total;") ;
+				// dd ($data[3]);
+                $data_values ="";
 				$values = [];
 				foreach ($data as $dt) {
-					$data_values .= '["' . $dt->branche .'",   '.$dt->impayes_total.'],';
+          // $num = number_format($dt->prime_tot, 2,'.', ' ');
+					$data_values .= '["' . $dt->branche .'",' . $dt->prime_tot .'],';
 				}
 				$chart_data = $data_values;
        
@@ -48,6 +58,7 @@
           <div id="top_x_div" style="width: 48%; height: 500px"></div>	
         </div><br><br>
       </div>
+      <button id="hide" onclick="hideMe()">hide</button>
 		<!-- Container closed -->
 @endsection
 @section('js')
@@ -61,7 +72,9 @@
           <?php echo $data_values; ?>
         ]);
         var options = {
-          title: ''
+          title: '',
+          sliceVisibilityThreshold: 0
+
         };
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);
@@ -98,4 +111,17 @@
         chart.draw(data, options);
       };
     </script>
+
+    <script>
+      function hideMe(){
+        let div = document.getElementById('piechart');
+        if(div.style.display == 'none'){
+          div.style.display = 'block';
+          
+        }else{
+          
+          div.style.display = 'none';
+        }
+      }
+      </script>
 @endsection

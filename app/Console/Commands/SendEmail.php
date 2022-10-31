@@ -43,9 +43,9 @@ class SendEmail extends Command
                 // transform files to send to array  
                 $files_to_send = explode(',', $impaye->file_to_send);
                 if (strlen($emails_to_send[0]) > 1) {
-                    Mail::to($impaye->email_to)->cc($emails_to_send)->send(new MailReceipt($impaye->fileName, $files_to_send, $impaye->message, $impaye->object));
+                    Mail::to($impaye->email_to)->cc($emails_to_send)->send(new MailReceipt($impaye->fileName, $files_to_send, $impaye->message, $impaye->object, $impaye->default_message));
                 } else {
-                    Mail::to($impaye->email_to)->send(new MailReceipt($impaye->fileName, $files_to_send, $impaye->message, $impaye->object));
+                    Mail::to($impaye->email_to)->send(new MailReceipt($impaye->fileName, $files_to_send, $impaye->message, $impaye->object, $impaye->default_message));
                 }
                 $impaye->update([
                     'isSendToMail' => 1,

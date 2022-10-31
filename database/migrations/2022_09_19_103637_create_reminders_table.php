@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('fileName');
             $table->string('email_to');
             $table->text('message')->nullable();
+            $table->text('default_message')->nullable();
             $table->string('user');
             $table->text('file_to_send')->nullable();
             $table->string('cc')->nullable();

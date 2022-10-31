@@ -75,11 +75,12 @@
 													$name = implode(' / ', array_diff( explode('_',$reminder->fileName),array('Q' , explode('_',$reminder->fileName)[count(explode('_',$reminder->fileName))-1])));
 												@endphp
 												<td>{{  $name}}</td>
-												<td>
+												<td >
 													@php
 													$file_path = asset( "../storage/releve") ."/"  . $reminder->fileName . ".pdf";
 													@endphp
-													<a class="" style="padding: 8px 15px;width:100%;height:43px;text-decoration:none;" target="_blank"  href="{{$file_path}}">Ouvrir</a>
+													<a class="" style="padding: 8px 15px;width:100%;height:43px;text-decoration:none;" target="_blank"  href="{{$file_path}}">
+														<i class="far fa-eye"></i></a>
 													</td>
                                                 </tr>
                                             @endforeach

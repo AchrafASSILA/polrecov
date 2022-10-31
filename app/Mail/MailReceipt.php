@@ -16,17 +16,19 @@ class MailReceipt extends Mailable
     protected $message;
     protected $files_to_send;
     protected $object;
+    protected $default_object;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($file, $files_to_send, $message, $object)
+    public function __construct($file, $files_to_send, $message, $object, $default_object)
     {
         $this->file = $file;
         $this->message = $message;
         $this->files_to_send = $files_to_send;
         $this->object = $object;
+        $this->default_object = $default_object;
     }
 
     /**
@@ -37,7 +39,8 @@ class MailReceipt extends Mailable
     public function build()
     {
         $object = $this->object;
-        $email =  $this->from('achrafassila678@gmail.com', 'polassur')->subject($this->message)->view('emails.email_rec', compact('object'));
+        $default_object = $this->default_object;
+        $email =  $this->from('achrafassila678@gmail.com', 'polassur')->subject($this->message)->view('emails.email_rec', compact('object', 'default_object'));
         $email->attach(public_path('storage\releve\\' . $this->file . '.pdf'));
 
 
