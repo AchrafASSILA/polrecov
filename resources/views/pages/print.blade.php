@@ -289,6 +289,7 @@
                 var value = this.value;
                 var d = new Date();
                 var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+                
                 if(value < strDate){
                     $("#error").css("display",'block');
                     this.value = "";

@@ -365,11 +365,12 @@ class ImpayesController extends Controller
             ]);
             // call the function transformExcelFileToMysqlData  that stored excel file data in mysql 
             Impayes::truncate();
+            Subscriber::truncate();
             $path = $request->file('excelFile');
             // Excel::import(new ImpayesImport, $path);
-            Excel::import(new ImpayesSubsImport, $path);
+            Excel::import(new ImpayesSubsImport(), $path);
             return redirect()->route('impayes.index')->with([
-                'success' => 'la base a été insérer avec succes',
+                'success' => 'la base a été inséré avec succés',
             ]);
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);

@@ -32,7 +32,7 @@
 										<div class="d-flex wd-100p">
 											<div class="main-img-user"><img alt="" src="{{URL::asset('assets/img/faces/admin1.png')}}" class=""></div>
 											<div class="mr-3 my-auto">
-												<h6>{{auth()->user()->name}}</h6><span>Full Stack Dev</span>
+												<h6>{{auth()->user()->name}}</h6><span></span>
 											</div>
 										</div>
 									</div>

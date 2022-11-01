@@ -31,8 +31,10 @@
                 or impayes.branche = 'AUTO SOCIETES'
                 or impayes.branche = 'AUTO SOCIETES'
                 or impayes.branche = 'CARTE VERTE AUTO' 
+                or impayes.branche = 'A.M.C' 
+                or impayes.branche = 'MULTIRISQUE HABITATIONS' 
                 or impayes.branche = 'ASSISTANCE ETUDIANT À L\'ETRANGER'
-                or impayes.branche = 'ASSISTANCE SCOLAIRE' GROUP BY impayes.branche  ORDER BY impayes_total;") ;
+                or impayes.branche = 'ASSISTANCE SCOLAIRE' GROUP BY impayes.branche  ORDER BY prime_tot DESC;") ;
 				// dd ($data[3]);
                 $data_values ="";
 				$values = [];

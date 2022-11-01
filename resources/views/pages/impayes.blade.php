@@ -109,7 +109,7 @@
 								justify-content: center;margin-bottom: 10px;">
 									
 									<button class="btn btn-primary" style="margin-right: 10px;" id="show_all">Vue détaillée</button>
-									<button class="btn btn-primary" style="margin-right: 10px;" id="hide_all">Vue condoncée</button>
+									<button class="btn btn-primary" style="margin-right: 10px;" id="hide_all">Vue condensée</button>
 									<div class="form-group" style="margin-bottom: 0px;margin-right: 10px;" >
 										<div class="dropdown">
 											<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary" data-toggle="dropdown" id="dropdownMenuButton" type="button">Champs<i class="fas fa-caret-down ml-1"></i></button>
@@ -194,7 +194,7 @@
 										</div>
 										<div class="form-group"  style="width: 100%;text-align: left;">
 											<label style="width: 100%;text-align: left;" for="subscribers">Groupement</label>
-											<select name="subscribers" disabled id="subscribers" style="width:50%" class="form-control select2">
+											<select name="subscribers" disabled  id="subscribers" style="width:50%" class="form-control select2">
 												<p class="mg-b-10">Subscribers</p>
 											</select>
 										</div>
@@ -234,7 +234,7 @@
 												<td  class="ellipsis"  ><span>{{$impaye->police}}</span></td>
 												<td  class="ellipsis"  ><span>{{date('d/m/Y', strtotime( $impaye->du))}}</span></td>
 												<td  class="ellipsis" ><span>{{date('d/m/Y', strtotime($impaye->au))}}</span></td>
-												<td  class="ellipsis" ><span>{{ number_format($impaye->prime_total, 2,'.', ' ')}}</span></td>
+												<td  class="ellipsis"  ><span style="text-align: right">{{ number_format($impaye->prime_total, 2,'.', ' ')}}</span></td>
 												<td  class="ellipsis" ><span>{{$impaye->mtt_ancaiss}}</span></td>
 												<td  class="ellipsis"  ><span>{{$impaye->ref_encaiss}}</span></td>
 												<td  class="ellipsis" ><span> {{$impaye->aperiteur}}</span></td>
@@ -334,10 +334,13 @@
                     },
                 });
             } else {
-                console.log("AJAX load did not work");
+                console.log("AJAX load did not work here");
             }
         }
     });
+	$('#impayes').on('change',function(){
+
+	
     var search = $(this).val();
     if (search) {
 		$('#subscribers').prop("disabled", false);
@@ -361,6 +364,7 @@
 		$('#subscribers').prop("disabled", true);
         console.log("AJAX load did not work");
     }
+});
 });
 
 </script>
