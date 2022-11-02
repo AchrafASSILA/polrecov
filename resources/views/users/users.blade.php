@@ -54,7 +54,6 @@
 										<thead>
 											<tr>
 												<th class="wd-10p border-bottom-0">Name</th>
-												<th class="wd-10p border-bottom-0">Email</th>
 												<th class="wd-10p border-bottom-0">Username</th>
 												<th class="wd-10p border-bottom-0">Type</th>
 												<th class="wd-10p border-bottom-0">Creer Le</th>
@@ -64,7 +63,6 @@
 											@foreach ($users as $user)
 											<tr>
                                                 <td>{{$user->name}}</td>
-												<td>{{$user->email}}</td>
 												<td>{{$user->username}}</td>
                                                 @if ($user->type === 0)
 												<td>Admin</td>
@@ -73,7 +71,7 @@
 												<td>User</td>
                                                 @else
                                                     
-												<td>Consulter</td>
+												<td>Viewer</td>
                                                 @endif
 												<td>{{$user->created_at}}</td>
 												<td style="display: flex">

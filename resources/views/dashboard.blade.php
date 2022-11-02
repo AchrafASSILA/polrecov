@@ -60,7 +60,7 @@
           <div id="top_x_div" style="width: 48%; height: 500px"></div>	
         </div><br><br>
       </div>
-      <button id="hide" onclick="hideMe()">hide</button>
+      {{-- <button id="hide" onclick="hideMe()">hide</button> --}}
 		<!-- Container closed -->
 @endsection
 @section('js')

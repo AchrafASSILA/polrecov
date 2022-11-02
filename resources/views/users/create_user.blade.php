@@ -53,13 +53,7 @@
                                 <input value="{{old('name')}}" class="form-control type mg-b-20"
                                     data-parsley-class-handler="#lnWrapper"required  name="name"  type="text">
                             </div>
-
-                            <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                <label>Email : <span class="tx-danger">*</span></label>
-                                <input value="{{old('email')}}" class="form-control type mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" required name="email" type="email">
-                            </div>
-                            <div class="parsley-input col-12 mg-t-20 mg-md-t-0" id="lnWrapper">
+                            <div class="parsley-input col-md-6" id="lnWrapper">
                                 <label>Username : <span class="tx-danger">*</span></label>
                                 <input value="{{old('username')}}" class="form-control type mg-b-20"
                                     data-parsley-class-handler="#lnWrapper" required name="username" type="text">

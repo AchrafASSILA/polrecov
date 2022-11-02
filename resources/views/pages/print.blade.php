@@ -15,7 +15,6 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
     .total span:nth-child(2){
         padding-right: 10px;
@@ -110,7 +109,7 @@
                                         
                                         <span>total</span>
                                         <span>
-                                            <?php echo number_format($total, 2)?>
+                                            <?php echo number_format($total, 2,'.',' ')?>
                                         </span>
                                     </div>
                                     
@@ -288,9 +287,14 @@
                 $("#error").css("display",'none');
                 var value = this.value;
                 var d = new Date();
-                var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+                day = '' + d.getDate();
+                if (day.length < 2) {
+
+                    day = '0' + day;
+                }
+                    var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + day;
                 
-                if(value < strDate){
+                if(value <= strDate){
                     $("#error").css("display",'block');
                     this.value = "";
                 }

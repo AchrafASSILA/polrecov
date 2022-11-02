@@ -41,14 +41,12 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email',
             'username' => 'required|string|unique:users',
             'password' => 'required|same:confirm-password',
             'type_user' => 'required',
         ]);
         User::create([
             'name' => $request->name,
-            'email' => $request->email,
             'password' => Hash::make($request->password),
             'type' => $request->type_user,
             'username' => $request->username,
@@ -93,14 +91,12 @@ class UserController extends Controller
 
             $this->validate($request, [
                 'name' => 'required',
-                'email' => 'required|email',
                 'username' => 'required|string|unique:users,username,' . $id,
                 'password' => 'required|same:confirm-password',
                 'type_user' => 'required'
             ]);
             User::find($id)->update([
                 'name' => $request->name,
-                'email' => $request->email,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'type' => $request->type_user,
@@ -108,13 +104,11 @@ class UserController extends Controller
         } else {
             $this->validate($request, [
                 'name' => 'required',
-                'email' => 'required|email',
                 'username' => 'required|string|unique:users,username,' . $id,
                 'type_user' => 'required'
             ]);
             User::find($id)->update([
                 'name' => $request->name,
-                'email' => $request->email,
                 'username' => $request->username,
                 'type' => $request->type_user,
             ]);
