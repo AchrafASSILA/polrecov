@@ -21,7 +21,9 @@
 @section('content')
 {{-- select count(impayes.id) as "total_count" , subscribers.raisonsociale from impayes INNER JOIN subscribers on subscribers.raisonsociale = impayes.souscripteur GROUP BY subscribers.raisonsociale ORDER BY total_count DESC LIMIT 10; --}}
 {{-- select sum(impayes.prime_total) as "total_prime" , subscribers.raisonsociale from impayes INNER JOIN subscribers on subscribers.raisonsociale = impayes.souscripteur GROUP BY subscribers.raisonsociale ORDER BY total_prime DESC LIMIT 10; --}}
-      @php
+{{-- SELECT SUM(impayes.prime_total) ptt FROM impayes WHERE month(impayes.du) = month(NOW() - INTERVAL 3 MONTH); --}}
+
+    @php
 				$data = \DB::select("select count(*) as impayes_total , SUM(impayes.prime_total) prime_tot , impayes.branche  FROM impayes 
                 where impayes.branche = 'D.I.M' 
                 or impayes.branche = 'accidents de travail' 
@@ -52,13 +54,27 @@
 					$data_values_1 .= '["' . $dt->raisonsociale  .'",   '.$dt->total_prime.'],';
 				}
 				$chart_data_1 = $data_values_1;
-				@endphp
+        $last_month = \DB::select('select SUM(impayes.prime_total) ptt , "month 1" as "m1" FROM impayes WHERE month(impayes.du) = month(NOW() - INTERVAL 1 MONTH);');
+        $last_two_month = \DB::select('select SUM(impayes.prime_total) ptt , "month 2" as "m2" FROM impayes WHERE month(impayes.du) = month(NOW() - INTERVAL 2 MONTH);');
+        $last_three_month = \DB::select('select SUM(impayes.prime_total) ptt , "month 3" as "m3" FROM impayes WHERE month(impayes.du) = month(NOW() - INTERVAL 3 MONTH);');
+        $last_six_month = \DB::select('select SUM(impayes.prime_total) ptt , "month 6" as "m6" FROM impayes WHERE month(impayes.du) = month(NOW() - INTERVAL 6 MONTH);');
+        $last_nine_month = \DB::select('select SUM(impayes.prime_total) ptt , "month 9" as "m9" FROM impayes WHERE month(impayes.du) = month(NOW() - INTERVAL 9 MONTH);');
+        $last_twelve_month = \DB::select('select SUM(impayes.prime_total) ptt , "month 12" as "m12" FROM impayes WHERE month(impayes.du) = month(NOW() - INTERVAL 12 MONTH);');
+				$data_3 ='["' . $last_month[0]->m1 .'",   '.$last_month[0]->ptt.'],';
+				$data_3 .='["' . $last_two_month[0]->m2 .'",   '.$last_two_month[0]->ptt.'],';
+				$data_3 .='["' . $last_three_month[0]->m3 .'",   '.$last_three_month[0]->ptt.'],';
+				$data_3 .='["' . $last_six_month[0]->m6 .'",   '.$last_six_month[0]->ptt.'],';
+				$data_3 .='["' . $last_nine_month[0]->m9 .'",   '.$last_nine_month[0]->ptt.'],';
+				$data_3 .='["' . $last_twelve_month[0]->m12 .'",   '.$last_twelve_month[0]->ptt.'],';
+        // dd($data_3)
+        @endphp
 				<!-- row -->
         <div style="display: flex;justify-content:space-around">
 
           <div id="piechart" style="width: 48%; height: 500px;margin-rigth:10px"></div>
           <div id="top_x_div" style="width: 48%; height: 500px"></div>	
         </div><br><br>
+        <div id="top_x_div_" style="width: 100%; height: 500px"></div>	
       </div>
       {{-- <button id="hide" onclick="hideMe()">hide</button> --}}
 		<!-- Container closed -->
@@ -113,17 +129,35 @@
         chart.draw(data, options);
       };
     </script>
+   <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
 
-    <script>
-      function hideMe(){
-        let div = document.getElementById('piechart');
-        if(div.style.display == 'none'){
-          div.style.display = 'block';
-          
-        }else{
-          
-          div.style.display = 'none';
-        }
-      }
-      </script>
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+          ['Opening Move', 'Percentage'],
+          <?php echo $data_3; ?>
+        ]);
+
+        var options = {
+          // title: 'Chess opening moves',
+          // width: 900,
+          legend: { position: 'none' },
+          chart: { title: '',
+                   subtitle: '' },
+          bars: 'horizontal', // Required for Material Bar Charts.
+          axes: {
+            x: {
+              0: { side: 'top', label: 'Percentage'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('top_x_div_'));
+        chart.draw(data, options);
+      };
+    </script>
+
+   
 @endsection
