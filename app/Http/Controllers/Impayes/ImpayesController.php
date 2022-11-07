@@ -100,7 +100,6 @@ class ImpayesController extends Controller
             foreach ($files as $file) {
                 $files_quittances[] = ltrim(rtrim($file, '.pdf'), 'Q_');
             }
-
             return view('pages.print', compact('receipts', 'quitances', 'subscriber_principale', 'files_quittances'));
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);

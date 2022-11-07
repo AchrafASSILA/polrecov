@@ -91,7 +91,8 @@
 															@endphp
 															<a class="" style="padding: 8px 15px;width:100%;height:43px;text-decoration:none;" target="_blank"  href="{{$file_path}}">
 																<i class="far fa-eye"></i></a>
-															<a class="dropdown-item" style="padding: 8px 15px;width:100%;height:43px;" href="{{route('reminder.edit',$reminder->id)}}">Modifier La date</a>
+														
+															<button data-target="{{'#modaldemo'.$reminder->id}}" data-toggle="modal"  class="dropdown-item" style="padding: 8px 15px;width:100%;height:43px;">Modifier La date</button>
 															<a class="dropdown-item" style="padding: 8px 15px;width:100%;height:43px;" href="{{route('sendAnEmailNow',$reminder->id)}}">Envoyer maintenant</a>
 															<form class="dropdown-item" style="display: inline-block;" action="{{route('reminder.destroy',$reminder->id)}}" method="post">
 																@csrf
@@ -102,11 +103,34 @@
 																	supprimer
 																</button>
 															</form>	
+														</div></div>
+															
+														</td>
+														@endif
+													</tr>
+													<div class="modal" id="{{'modaldemo'.$reminder->id}}">
+														<div class="modal-dialog modal-dialog-centered" role="document">
+															<div class="modal-content modal-content-demo">
+																<div class="modal-header">
+																	<h6 class="modal-title">Modif de date</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+																</div>
+																<div class="modal-body">
+																	<form method="POST" action="{{route('reminder.update',$reminder->id)}}" class="form-horizontal" >
+																		@csrf
+																		@method('PUT')
+																		<div class="form-group">
+																			<input type="date" class="form-control" name="date_of_livred" value="{{explode(' ', $reminder->dateOfLivred)[0]}}">
+																		</div>
+																		<div class="form-group mb-0 mt-3 justify-content-end">
+																			<div>
+																				<button type="submit" class="btn btn-primary">Modifier</button>
+																				</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
 														</div>
-													</div>
-												</td>
-												@endif
-											</tr>
+													</div>  
                                             @endforeach
 										</tbody>
 									</table>
@@ -145,5 +169,6 @@
 <script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
 <!--Internal  Datatable js -->
 <script src="{{URL::asset('assets/js/table-data.js')}}"></script>
-
+<!-- Internal Modal js-->
+<script src="{{URL::asset('assets/js/modal.js')}}"></script>
 @endsection

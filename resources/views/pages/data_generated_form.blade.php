@@ -156,7 +156,7 @@ td{
                 <th id="total" >Total </th>
                 <td style="text-align: right"><?php echo number_format($total, 2 ,'.',' ')?></td>
               </tr>
-            
+            </tfoot>
           </table>
         </div>
         @endforeach

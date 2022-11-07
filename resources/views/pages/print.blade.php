@@ -65,9 +65,10 @@
                                         <th style="text-align: center" class="wd-15p border-bottom-0">N Quittance</th>
                                         <th style="text-align: center" class="wd-15p border-bottom-0">N Police</th>
                                         <th style="text-align: center" class="wd-15p border-bottom-0">Categorie/Branche/Risque</th>
+                                        <th style="text-align: center" class="wd-15p border-bottom-0">Cnie </th>
                                         <th style="text-align: center" class="wd-20p border-bottom-0">Du</th>
                                         <th style="text-align: center" class="wd-15p border-bottom-0">Au</th>
-                                        <th style="text-align: center" class="wd-10p border-bottom-0">Prime Total</th>
+                                        <th style="text-align: center" class="wd-10p border-bottom-0">Prime Totale</th>
                                         <th style="text-align: center" class="wd-10p border-bottom-0"><input name="select_all" id="all" type="checkbox" onclick="CheckAll('box1', this)" ></th>
                                         
                                     </tr>
@@ -80,38 +81,38 @@
                                     @foreach ($recs as $receipt)
                                         
                                     <tr>
-                                        <td  style="text-align: center" >{{$receipt->quitance}}</td>
-                                        <td style="text-align: center" >{{$receipt->police}}</td>
-                                        <td >{{$receipt->categorie }}</td>
-                                        <td style="text-align: center" >{{date('m/d/Y', strtotime( $receipt->du))}}</td>
-                                        <td style="text-align: center" >{{date('m/d/Y', strtotime( $receipt->au))}}</td>
-                                        <td style="text-align: right" >{{ number_format($receipt->prime_total, 2,'.',' ')}}</td> 
+                                        <td  style="text-align: center;border-bottom:1px solid #dde2ef" >{{$receipt->quitance}}</td>
+                                        <td style="text-align: center;border-bottom:1px solid #dde2ef" >{{$receipt->police}}</td>
+                                        <td style="border-bottom:1px solid #dde2ef">{{$receipt->categorie }}</td>
+                                        <td style="border-bottom:1px solid #dde2ef;text-align:center">{{$receipt->aperiteur }}</td>
+                                        <td style="text-align: center;border-bottom:1px solid #dde2ef" >{{date('m/d/Y', strtotime( $receipt->du))}}</td>
+                                        <td style="text-align: center;border-bottom:1px solid #dde2ef" >{{date('m/d/Y', strtotime( $receipt->au))}}</td>
+                                        <td style="text-align: right;border-bottom:1px solid #dde2ef" >{{ number_format($receipt->prime_total, 2,'.',' ')}}</td> 
                                         @if (in_array( $receipt->quitance,$files_quittances))
-                                        <td style="text-align: center" ><input type="checkbox"  value="{{'Q_'.$receipt->quitance.'.pdf'}}" class="box1" ></td> 
+                                        <td style="text-align: center ;border-bottom:1px solid #dde2ef" ><input type="checkbox"  value="{{'Q_'.$receipt->quitance.'.pdf'}}" class="box1" ></td> 
                                             
                                         @else
                                             
-                                        <td style="text-align: center" ><input type="checkbox" disabled></td> 
+                                        <td style="text-align: center;border-bottom:1px solid #dde2ef" ><input type="checkbox" disabled></td> 
                                         @endif
                                     </tr>
                                     @php
                                     $total += $receipt->prime_total;
                                     @endphp
                                     @endforeach
-                                            </tbody>
-                                        
-                                            
-                                            
-                                        </tbody>
+                                    <tfoot >
+                                        <tr>
+                                          <th id="total" style="border: none"></th>
+                                          <th id="total" style="border: none"></th>
+                                          <th id="total" style="border: none"></th>
+                                          <th id="total" style="border: none"></th>
+                                          <th id="total" style="border: none"></th>
+                                          <th id="total" style="text-align: center" >Total </th>
+                                          <td style="text-align: right"><?php echo number_format($total, 2 ,'.',' ')?></td>
+                                        </tr></tfoot>
                                     </table>
                                     
-                                    <div style="margin-top: 15px;text-align: right;" class="total">
-                                        
-                                        <span>total</span>
-                                        <span>
-                                            <?php echo number_format($total, 2,'.',' ')?>
-                                        </span>
-                                    </div>
+                                    
                                     
                                     @endforeach
                                 </div>
@@ -240,6 +241,7 @@
 
                                                 <button class="btn btn-primary mt-3 mr-2" type="submit" >Valider Tache</button>
                                             </div>
+                                            
                                         </form>
 									</div>
 								</div>
