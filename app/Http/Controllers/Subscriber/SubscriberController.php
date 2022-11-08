@@ -30,8 +30,8 @@ class SubscriberController extends Controller
         // get single contact from table subscribers 
         $contact =  Subscriber::where('id', $id)->first();
         // get the groupement of contacts by the field groupement (should be the same)  
-        $contacts = Subscriber::where('groupement', $contact->groupement)->get();
-        return view('contacts.contact', compact('contact', 'contacts'));
+        $father = Subscriber::where('compte', $contact->groupement)->first();
+        return json_decode(json_encode([$contact, $father]), true);
     }
     /**
      * Show the form for creating a new resource.

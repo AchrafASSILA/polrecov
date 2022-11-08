@@ -20,7 +20,7 @@
 				</div>
 				<!-- breadcrumb -->
 				<style>
-					.dataTables_filter, .dataTables_info { display: none; }
+					/* .dataTables_filter, .dataTables_info { display: none; } */
 				</style>
 @endsection
 @section('content')
@@ -45,8 +45,10 @@
 							<div class="card-body">
 								<div class="table-responsive">
 									<div class="mb-4" >
-										<div class="form-group">
+										<div class="form-group" style="width: 100%;
+										display: flex;">
 											<input type="text" aria-controls="example1" class="form-control" style="width: 50%" id="sub" placeholder="Name">
+											<button class="btn btn-primary" style="margin-left: 5px" id="reset">Reset</button>
 										</div>
 									</div>
 									<table class="table text-md-nowrap" id="example1">
@@ -61,7 +63,7 @@
 										<tbody id="tbImpayes">
 											@foreach ($contacts as $contact)
 											<tr>
-                                                <td><a href="{{route('contacts',$contact->id)}}">{{$contact->raisonsociale}}</a></td>
+                                                <td rais={{$contact->id}}>{{$contact->raisonsociale}}</td>
 												<td style={{$contact->ste_part === 1 ? "color:green" : "color:red"}}>{{ $contact->ste_part === 1 ? "oui" : "non"}}</td>
 												<td>{{$contact->responsable}}</td>
 												<td>{{$contact->telephone}}</td>
@@ -73,13 +75,87 @@
 								</div>
 							</div>
 						</div>
-						
+					</div></div>	
+<!-- row closed -->
+<!-- row -->
+<div class="row" id="tw" style="display: none">
+	<div class="col-lg-12 col-md-12">
+		<div class="card" id="basic-alert">
+			<div class="card-body">
+							
+							
+							<div class="text-wrap" >
+								{{-- <div class="example"> --}}
+									<div class="panel panel-primary tabs-style-1">
+										<div class=" tab-menu-heading">
+											<div class="tabs-menu1">
+												<!-- Tabs -->
+												<ul class="nav panel-tabs main-nav-line">
+													<li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab">Contact Principale</a></li>
+													<li class="nav-item"><a href="#tab3" id="tabF" class="nav-link" data-toggle="tab">Groupement</a></li>
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body main-content-body-right border-top-0 border">
+											<div class="tab-content">
+												<div class="tab-pane active" id="tab1">
+													<div class="table-responsive">
+														<table id="example2" class="table key-buttons text-md-nowrap" style="width: 100%">
+															<thead>
+																<tr>
+																	<th class="wd-15p border-bottom-0">Raisonsociale</th>
+																	<th class="wd-15p border-bottom-0">ste_part</th>
+																	<th class="wd-15p border-bottom-0">Responsable</th>
+																	<th class="wd-15p border-bottom-0">Telephone</th>
+																	<th class="wd-15p border-bottom-0">EmaiL</th>
+																	</thead>
+															<tbody id="cntS">
+																<tr>
+																	
+																</tr>
+															</tbody>
+														</table>
+
+											</div>
+										</div>
+												
+												<div class="tab-pane" id="tab3">
+													<div class="table-responsive">
+														
+														<table id="example1" class="table key-buttons text-md-nowrap">
+															
+														<thead>
+															<tr>
+																<th class="wd-15p border-bottom-0">Raisonsociale</th>
+																<th class="wd-15p border-bottom-0">ste_part</th>
+																<th class="wd-15p border-bottom-0">Responsable</th>
+																<th class="wd-15p border-bottom-0">Telephone</th>
+																<th class="wd-15p border-bottom-0">EmaiL</th>
+																</thead>
+														<tbody id="cntF">
+															<tr>
+																
+															</tr>
+														</tbody>
+
+														</table>
+</div>
+
+
+
+
+
+
+
+
+</div>
 					</div>
 				</div>
 				<!-- row closed -->
 			</div>
 			<!-- Container closed -->
 		</div>
+							</div></div></div></div></div>
 		<!-- main-content closed -->
 @endsection
 
@@ -102,8 +178,56 @@
  <script src="{{URL::asset('assets/js/table-data.js')}}"></script>
  <script>
 	 $("#sub").keyup(function () {
-		 $('input[type="checkbox"]').prop("checked", false);
 		 $("#example1").DataTable().column(0).search($(this).val()).draw();
 		});
+	$("#tbImpayes tr td").click(function(e){     //function_td
+	var search  = ($(this).attr('rais'));
+	$.ajax({
+		url: "{{ URL::to('admin/contacts/') }}/" + search,
+		type: "GET",
+		dataType: "json",
+		success: function (data) {
+			// if(data[0].id !== data[1].id){
+				console.log(data[0]);
+				console.log(data[1]);
+			$('#tw').show();
+                $('#cntS').empty();
+                    $('#cntS').append(
+                        `<tr >
+							<td>  ${data[0].raisonsociale !== null ?  data[0].raisonsociale: " " }  </td>
+							<td style=${data[0].ste_part === 1 ? "color:green" : "color:red"}>  ${data[0].ste_part === 1 ? "oui" : "non"}  </td>
+							<td>  ${data[0].responsable !== null ?  data[0].responsable : " " }  </td>
+							<td>  ${data[0].telephone !== null ?  data[0].telephone : " " }  </td>
+							<td>  ${data[0].email !== null ?  data[0].email : " "}  </td>
+							</tr>`
+							);
+							if(data[0].id !== data[1].id){
+								$('#tabF').css('pointer-events','');
+								$('#tabF').css('opacity','1');
+								$('#tabF').css('cursor','pointer');
+								$('#cntF').empty();
+								$('#cntF').append(
+                        `<tr >
+							<td>  ${data[1].raisonsociale !== null ?  data[1].raisonsociale: " " }  </td>
+							<td style=${data[1].ste_part === 1 ? "color:green" : "color:red"}>  ${data[1].ste_part === 1 ? "oui" : "non"}  </td>
+							<td>  ${data[1].responsable !== null ?   data[1].responsable : " "}  </td>
+							<td>  ${data[1].telephone !== null ?  data[1].telephone : " " }  </td>
+							<td>  ${data[1].email !== null ?  data[1].email : " " }  </td>
+							</tr>`
+							);
+						}else{
+							$('#tabF').css('pointer-events',' none');
+							$('#tabF').css('opacity',' 0.5');
+							$('#tabF').css('cursor','not-allowed');
+							
+						}
+				}
+        });
+	});
+	$('#reset').click(function(){
+		$("#example1").DataTable().column(0).search("").draw();
+		$('#sub').val("");
+		$('#tw').hide();
+	})
 	</script>
 @endsection
