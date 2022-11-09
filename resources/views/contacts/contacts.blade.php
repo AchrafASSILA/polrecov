@@ -63,7 +63,8 @@
 										<tbody id="tbImpayes">
 											@foreach ($contacts as $contact)
 											<tr>
-                                                <td rais={{$contact->id}}>{{$contact->raisonsociale}}</td>
+                                                <td style="    cursor: pointer;
+												color: #2196f3;" rais={{$contact->id}}>{{$contact->raisonsociale}}</td>
 												<td style={{$contact->ste_part === 1 ? "color:green" : "color:red"}}>{{ $contact->ste_part === 1 ? "oui" : "non"}}</td>
 												<td>{{$contact->responsable}}</td>
 												<td>{{$contact->telephone}}</td>
@@ -76,6 +77,16 @@
 							</div>
 						</div>
 					</div></div>	
+									<style>
+										tr:nth-child(even) {background: #ecf0fa !important}
+										tr:nth-child(odd) {background: #FFF}
+										table.dataTable tbody td.sorting_1{
+											background: none;
+										}
+										table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc{
+											background: none;
+										}
+									</style>
 <!-- row closed -->
 <!-- row -->
 <div class="row" id="tw" style="display: none">
@@ -139,6 +150,10 @@
 														</tbody>
 
 														</table>
+														<style>
+															tr:nth-child(even) {background-color: rgb(255, 0, 0)}
+															tr:nth-child(odd) {background-color: #FFF}
+														</style>
 </div>
 
 
@@ -157,6 +172,7 @@
 		</div>
 							</div></div></div></div></div>
 		<!-- main-content closed -->
+		
 @endsection
 
 @section('js')
