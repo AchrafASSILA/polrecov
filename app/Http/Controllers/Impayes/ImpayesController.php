@@ -245,7 +245,7 @@ class ImpayesController extends Controller
                     'user' => auth()->user()->name,
                 ]);
                 return redirect()->route('reminder.index')->with([
-                    'success' => 'l\'email a été envoyer avec succès',
+                    'success' => 'L\'email a été envoyé avec succès',
                 ]);
             }
         }

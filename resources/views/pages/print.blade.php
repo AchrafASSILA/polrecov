@@ -68,7 +68,9 @@
                                         <th style="text-align: center" class="wd-15p border-bottom-0">Cnie </th>
                                         <th style="text-align: center" class="wd-20p border-bottom-0">Du</th>
                                         <th style="text-align: center" class="wd-15p border-bottom-0">Au</th>
-                                        <th style="text-align: center" class="wd-10p border-bottom-0">Prime Totale</th>
+                                        <th style="text-align: center;text-align: center;
+                                        padding: 12px 0px;" class="wd-10p border-bottom-0"><span style="    width: 100px;
+                                            display: block;"> Prime Totale</span></th>
                                         <th style="text-align: center" class="wd-10p border-bottom-0"><input name="select_all" id="all" type="checkbox" onclick="CheckAll('box1', this)" ></th>
                                         
                                     </tr>
@@ -87,7 +89,8 @@
                                         <td style="border-bottom:1px solid #dde2ef;text-align:center">{{$receipt->aperiteur }}</td>
                                         <td style="text-align: center;border-bottom:1px solid #dde2ef" >{{date('m/d/Y', strtotime( $receipt->du))}}</td>
                                         <td style="text-align: center;border-bottom:1px solid #dde2ef" >{{date('m/d/Y', strtotime( $receipt->au))}}</td>
-                                        <td style="text-align: right;border-bottom:1px solid #dde2ef" >{{ number_format($receipt->prime_total, 2,'.',' ')}}</td> 
+                                        <td style="text-align: right;min-width: 100px;
+                                        display: block;" >{{ number_format($receipt->prime_total, 2,'.',' ')}}</td> 
                                         @if (in_array( $receipt->quitance,$files_quittances))
                                         <td style="text-align: center ;border-bottom:1px solid #dde2ef" ><input type="checkbox"  value="{{'Q_'.$receipt->quitance.'.pdf'}}" class="box1" ></td> 
                                             
@@ -228,7 +231,8 @@
                                                         justify-content: center;
                                                         align-items: center;">
 
-                                                            <textarea class="form-control"  id="default_object" style="display: none;height:40px" type="text"  id="default_object"  name="default_object" >Bonjour C'est Polassur Merci De Lire L'appel Suivante</textarea>
+                                                            <textarea oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' class="form-control"  id="default_object" style="display: none;"  type="text"  id="default_object"  name="default_object" >Bonjour C'est Polassur Merci De Lire L'appel Suivante SuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivante
+                                                            </textarea>
                                                         <button type="button" onclick="showDefaultObject()" class="btn btn-primary" id="show_default_object" style="margin-left: auto;padding: 7px 20px;"><i style="font-size: 24px;" class="la la-pencil"></i></button>
                                                         </div>
                                                     </div>
@@ -370,6 +374,8 @@
         let input = document.getElementById('default_object');
         input.style.display='block';
         btn.style.marginLeft='5px';
+        input.style.height = "";
+        input.style.height = input.scrollHeight + "px"
     }
     function removeField(element){
 			var currentElementValue = element.parentElement.children[0].value;

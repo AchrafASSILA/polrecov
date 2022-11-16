@@ -109,7 +109,7 @@ class ReminderController extends Controller
                 'dateOfLivred' => $request->date_of_livred,
             ]);
             return redirect()->route('scheduleEmail')->with([
-                'success' => 'Le rappel à été bien modifier'
+                'success' => 'Le rappel a été modifié'
             ]);
         } else {
             return redirect()->back()->withErrors(['error' => 'Date Invalide']);

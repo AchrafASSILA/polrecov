@@ -125,7 +125,7 @@ td{
                   <th style="text-align: center;width:100px;background:#79b7d1" class="wd-15p border-bottom-0">Categorie/Branche/Risque</th>
                   <th style="text-align: center;width:100px;background:#79b7d1" class="wd-15p border-bottom-0">Du</th>
                   <th style="text-align: center;width:100px;background:#79b7d1" class="wd-15p border-bottom-0">Au</th>
-                  <th style="text-align: center;width:100px;background:#79b7d1" class="wd-15p border-bottom-0">Prime Total</th>
+                  <th style="text-align: center;width:100px;background:#79b7d1" class="wd-15p border-bottom-0">Prime Totale</th>
                     </tr>
               </tr>
             </thead>

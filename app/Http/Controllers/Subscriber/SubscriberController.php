@@ -29,9 +29,15 @@ class SubscriberController extends Controller
         Artisan::call('emails:send');
         // get single contact from table subscribers 
         $contact =  Subscriber::where('id', $id)->first();
+        $father = null;
+        $groupements = null;
+        if ($contact->compte === $contact->groupement) {
+            $groupements = Subscriber::where('groupement', $contact->groupement)->where('compte', '!=', $contact->groupement)->get();
+        } else {
+            $father = Subscriber::where('compte', $contact->groupement)->first();
+        }
         // get the groupement of contacts by the field groupement (should be the same)  
-        $father = Subscriber::where('compte', $contact->groupement)->first();
-        return json_decode(json_encode([$contact, $father]), true);
+        return json_decode(json_encode([$contact, $father, $groupements]), true);
     }
     /**
      * Show the form for creating a new resource.

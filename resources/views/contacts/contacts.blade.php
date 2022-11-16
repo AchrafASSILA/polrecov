@@ -195,6 +195,7 @@
  <script>
 	 $("#sub").keyup(function () {
 		 $("#example1").DataTable().column(0).search($(this).val()).draw();
+		 $('#tw').hide();
 		});
 	$("#tbImpayes tr td").click(function(e){     //function_td
 	var search  = ($(this).attr('rais'));
@@ -203,11 +204,9 @@
 		type: "GET",
 		dataType: "json",
 		success: function (data) {
-			// if(data[0].id !== data[1].id){
-				console.log(data[0]);
-				console.log(data[1]);
-			$('#tw').show();
+				$('#tw').show();
                 $('#cntS').empty();
+				// console.log(data);
                     $('#cntS').append(
                         `<tr >
 							<td>  ${data[0].raisonsociale !== null ?  data[0].raisonsociale: " " }  </td>
@@ -217,20 +216,36 @@
 							<td>  ${data[0].email !== null ?  data[0].email : " "}  </td>
 							</tr>`
 							);
-							if(data[0].id !== data[1].id){
+							if(data[0].id ){
 								$('#tabF').css('pointer-events','');
 								$('#tabF').css('opacity','1');
 								$('#tabF').css('cursor','pointer');
 								$('#cntF').empty();
-								$('#cntF').append(
-                        `<tr >
-							<td>  ${data[1].raisonsociale !== null ?  data[1].raisonsociale: " " }  </td>
-							<td style=${data[1].ste_part === 1 ? "color:green" : "color:red"}>  ${data[1].ste_part === 1 ? "oui" : "non"}  </td>
-							<td>  ${data[1].responsable !== null ?   data[1].responsable : " "}  </td>
-							<td>  ${data[1].telephone !== null ?  data[1].telephone : " " }  </td>
-							<td>  ${data[1].email !== null ?  data[1].email : " " }  </td>
-							</tr>`
+								if(data[1] != null ){
+									
+									$('#cntF').append(
+										`<tr >
+									<td>  ${data[1].raisonsociale !== null ?  data[1].raisonsociale: " " }  </td>
+									<td style=${data[1].ste_part === 1 ? "color:green" : "color:red"}>  ${data[1].ste_part === 1 ? "oui" : "non"}  </td>
+									<td>  ${data[1].responsable !== null ?   data[1].responsable : " "}  </td>
+									<td>  ${data[1].telephone !== null ?  data[1].telephone : " " }  </td>
+									<td>  ${data[1].email !== null ?  data[1].email : " " }  </td>
+									</tr>`
 							);
+
+								}else {
+									for(let i=0;i<data[2].length;i++){
+										$('#cntF').append(
+										`<tr >
+									<td>  ${data[2][i].raisonsociale !== null ?  data[2][i].raisonsociale: " " }  </td>
+									<td style=${data[2][i].ste_part === 1 ? "color:green" : "color:red"}>  ${data[2][i].ste_part === 1 ? "oui" : "non"}  </td>
+									<td>  ${data[2][i].responsable !== null ?   data[2][i].responsable : " "}  </td>
+									<td>  ${data[2][i].telephone !== null ?  data[2][i].telephone : " " }  </td>
+									<td>  ${data[2][i].email !== null ?  data[2][i].email : " " }  </td>
+									</tr>`
+							);
+									}
+								}
 						}else{
 							$('#tabF').css('pointer-events',' none');
 							$('#tabF').css('opacity',' 0.5');
