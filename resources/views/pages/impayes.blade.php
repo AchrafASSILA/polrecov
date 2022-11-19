@@ -230,6 +230,7 @@
 												<td  class="ellipsis"  ><span>{{$impaye->police}}</span></td>
 												<td  class="ellipsis"  ><span>{{date('d/m/Y', strtotime( $impaye->du))}}</span></td>
 												<td  class="ellipsis" ><span>{{date('d/m/Y', strtotime($impaye->au))}}</span></td>
+												{{-- <td  class="ellipsis"  ><span style="text-align: right"> {{$impaye->prime_total}}</span></td> --}}
 												<td  class="ellipsis"  ><span style="text-align: right"> {{(number_format($impaye->prime_total, 2,'.', ' '))}}</span></td>
 												<td  class="ellipsis" ><span>{{$impaye->mtt_ancaiss}}</span></td>
 												<td  class="ellipsis"  ><span>{{$impaye->ref_encaiss}}</span></td>
@@ -302,6 +303,14 @@
 	
 
 	$(document).ready(function () {
+		$('#example').dataTable({
+		"columnDefs": [
+			{ 
+				targets: 11 , 
+				"type": "sType",
+			}
+		]
+		});
     $("#sub").on("input", function () {
         var search = $(this).val();
         if (search == "") {

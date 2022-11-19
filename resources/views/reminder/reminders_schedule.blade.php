@@ -19,6 +19,58 @@
 					</div>
 					
 				</div>
+				<style>
+					.dataTables_filter, .dataTables_info { display: none; }
+					table.dataTable thead .sorting_desc::after , table.dataTable thead .sorting_asc::after{
+						display: none
+					}
+					.first {
+						width: 100%;
+					}
+					.ellipsis {
+						position: relative;
+						width: 70px;
+					}
+					.ellipsis:before {
+						content: ' ';
+						visibility: hidden;
+					}
+					.ellipsis span {
+						position: absolute;
+						left:0;
+						text-align: left;
+						padding-left: 10px;
+						right: 0;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+					.set-display{
+						position: relative;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						width: 60px;
+						text-align: left;
+					}
+					.set-display span{
+						/* display: inline-block; */
+					}
+					table.dataTable thead th[data-is-resizable=true] {
+					border-left: 1px solid transparent;
+					border-right: 1px dashed #bfbfbf;
+					}
+					table.dataTable thead th.dt-colresizable-hover {
+					cursor: col-resize;
+					background-color: #eaeaea;
+					border-left: 1px solid #bfbfbf;
+					}
+					table.dataTable thead th.dt-colresizable-bound-min, 
+					table.dataTable thead th.dt-colresizable-bound-max {
+					opacity: 0.2;
+					cursor: not-allowed !important;
+					}
+				</style>
 				<!-- breadcrumb -->
 @endsection
 @section('content')
@@ -51,16 +103,18 @@
 								</div>
 							<div class="card-body">
 								<div class="table-responsive">
-									<table class="table text-md-nowrap" id="example1">
+									<table style="table-layout: fixed;
+									word-wrap: break-word;width: 100%;" class="table text-md-nowrap table-striped" id="example1">
 										<thead>
 											<tr>
-												<th class="wd-15p border-bottom-0">Souscripteur</th>
-												<th class="wd-15p border-bottom-0">Type d'envoi</th>
-												<th class="wd-15p border-bottom-0">Email</th>
-												<th class="wd-15p border-bottom-0">Date Planifier</th>
-												<th class="wd-15p border-bottom-0">Creer Le</th>
-												<th class="wd-15p border-bottom-0">User</th>
-												<th class="wd-15p border-bottom-0">Releve</th>
+												<th class="set-display wd-15p border-bottom-0" style="display: none"><span> Souscripteur</span></th>
+												<th class="set-display wd-15p border-bottom-0"><span> Souscripteur</span></th>
+												<th class="set-display wd-15p border-bottom-0"><span> Type d'envoi</span></th>
+												<th class="set-display wd-15p border-bottom-0"><span> Email</span></th>
+												<th class="set-display wd-15p border-bottom-0"><span> Date Planifier</span></th>
+												<th class="set-display wd-15p border-bottom-0"><span> Creer Le</span></th>
+												<th class="set-display wd-15p border-bottom-0"><span> User</span></th>
+												<th class="set-display wd-15p border-bottom-0"><span> Releve</span></th>
 												@if (auth()->user()->type === 2 ||auth()->user()->type === 4 )
 												
 												<th class="wd-15p border-bottom-0">Operation</th>
@@ -69,17 +123,18 @@
 										<tbody id="tbImpayes">
 											@foreach ($reminders as $reminder)
 											<tr>
-                                                <td>{{$reminder->send_to}}</td>
-												<td>Par Email</td>
-                                                <td>{{$reminder->email_to}}</td>
-                                                <td>{{$reminder->dateOfLivred}}</td>
+                                                <td class="ellipsis" style="display: none"><span> {{$reminder->send_to}}</span></td>
+                                                <td class="ellipsis"><span> {{$reminder->send_to}}</span></td>
+												<td class="ellipsis"><span> Par Email</td>
+                                                <td class="ellipsis"><span> {{$reminder->email_to}}</span></td>
+                                                <td class="ellipsis"><span> {{$reminder->dateOfLivred}}</span></td>
 												
-												<td> {{\Carbon\Carbon::parse(explode(' ', $reminder->created_at)[1])->addHour()->toTimeString()}}</td>
-												<td>{{  $reminder->user}}</td>
+												<td class="ellipsis"><span>  {{\Carbon\Carbon::parse(explode(' ', $reminder->created_at)[1])->addHour()->toTimeString()}}</span></td>
+												<td class="ellipsis"><span> {{  $reminder->user}}</span></td>
 												@php
 													$name = implode(' / ', array_diff( explode('_',$reminder->fileName),array('Q' , explode('_',$reminder->fileName)[count(explode('_',$reminder->fileName))-1])));
 												@endphp
-												<td>{{  $name}}</td>
+												<td class="ellipsis"><span> {{  $name}}</span></td>
 												@if (auth()->user()->type === 2 ||auth()->user()->type === 4 )
 												
 												<td>
@@ -137,7 +192,10 @@
 								</div>
 							</div>
 						</div>
-						
+						<style>
+							tr:nth-child(even) {background: rgb(255, 0, 0)}
+							tr:nth-child(odd) {background: #FFF}
+						</style>
 					</div>
 				</div>
 				<!-- row closed -->
@@ -171,4 +229,6 @@
 <script src="{{URL::asset('assets/js/table-data.js')}}"></script>
 <!-- Internal Modal js-->
 <script src="{{URL::asset('assets/js/modal.js')}}"></script>
+<script src="{{URL::asset('assets/js/resize.js')}}"></script>
+
 @endsection
