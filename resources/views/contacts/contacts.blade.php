@@ -217,6 +217,7 @@
 							</tr>`
 							);
 							if(data[0].id ){
+								console.log(data);
 								$('#tabF').css('pointer-events','');
 								$('#tabF').css('opacity','1');
 								$('#tabF').css('cursor','pointer');
@@ -231,9 +232,15 @@
 									<td>  ${data[1].telephone !== null ?  data[1].telephone : " " }  </td>
 									<td>  ${data[1].email !== null ?  data[1].email : " " }  </td>
 									</tr>`
-							);
+								);
 
-								}else {
+								}else if(!data[1] && data[2].length === 0){
+									$('#tabF').css('pointer-events',' none');
+							$('#tabF').css('opacity',' 0.5');
+							$('#tabF').css('cursor','not-allowed');
+							
+								}
+								else {
 									for(let i=0;i<data[2].length;i++){
 										$('#cntF').append(
 										`<tr >
@@ -247,9 +254,6 @@
 									}
 								}
 						}else{
-							$('#tabF').css('pointer-events',' none');
-							$('#tabF').css('opacity',' 0.5');
-							$('#tabF').css('cursor','not-allowed');
 							
 						}
 				}

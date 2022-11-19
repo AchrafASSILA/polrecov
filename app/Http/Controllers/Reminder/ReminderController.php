@@ -127,7 +127,7 @@ class ReminderController extends Controller
         // get reminder and delete it from db 
         Reminder::destroy($id);
         return redirect()->back()->with([
-            'success' => 'element supprimer avec succes'
+            'success' => 'Élément supprimé avec succès'
         ]);
     }
 
@@ -154,7 +154,7 @@ class ReminderController extends Controller
                     'isSendToMail' => 1,
                     'dateSend' => Carbon::now(),
                 ]);
-                return redirect()->route('reminder.index')->with(['success' => 'element envoyer avec succes']);
+                return redirect()->route('reminder.index')->with(['success' => 'Élément envoyé avec succès']);
             }
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
