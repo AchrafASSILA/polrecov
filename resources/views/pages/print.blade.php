@@ -105,13 +105,13 @@
                                     @endforeach
                                     <tfoot >
                                         <tr>
-                                          <th id="total" style="border: none"></th>
-                                          <th id="total" style="border: none"></th>
-                                          <th id="total" style="border: none"></th>
-                                          <th id="total" style="border: none"></th>
-                                          <th id="total" style="border: none"></th>
-                                          <th id="total" style="text-align: center" >Total </th>
-                                          <td style="text-align: right"><?php echo number_format($total, 2 ,'.',' ')?></td>
+                                        <th id="total" style="border: none"></th>
+                                        <th id="total" style="border: none"></th>
+                                        <th id="total" style="border: none"></th>
+                                        <th id="total" style="border: none"></th>
+                                        <th id="total" style="border: none"></th>
+                                        <th id="total" style="text-align: center" >Total </th>
+                                        <td style="text-align: right"><?php echo number_format($total, 2 ,'.',' ')?></td>
                                         </tr></tfoot>
                                     </table>
                                     
@@ -120,138 +120,139 @@
                                     @endforeach
                                 </div>
                                 <hr class="mg-b-40">
-                                
-						<button class="btn " style="display: flex;
-                        margin-left: auto;
-                        background: #2196f3;color:white;" data-target="#modaldemo8" data-toggle="modal" style="text-align: center" id="generate" >Choisissez une methode d'envoi</button>
-						<div class="modal" id="modaldemo8">
-							<div class="modal-dialog modal-dialog-centered" role="document">
-								<div class="modal-content modal-content-demo">
-									<div class="modal-header">
-										<h6 class="modal-title">Méthode d'envoi</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-									</div>
-									<div class="modal-body">
-										<h6>Choisissez une méthode d'envoi ?</h6>
-										{{-- <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p> --}}
-                                        <form action="{{route('printT')}}" method="post">
-                                            <input type="text" name="files_to_send" hidden id="files_to_send">
-                                            @csrf
-                                            <div>
-                                                <div class="form-control" style="display: flex;border: none;align-items: center;">
-                                                    <input class="rdiobox"  required type="radio" id="Whatsaap" name="sendType" value="Whatsaap">
-                                                    <label  for="Whatsaap" style="margin-left: 5px;margin-bottom: 0px;font-weight: bold;">Whatsapp</label><br>
-                                                </div>
-                                                {{-- <div class="form-control" style="display: flex;border: none;align-items: center;">
-                                                    <label  for="number" style="margin-left: 5px;margin-bottom: 0px;font-weight: bold;">Whatsapp number :</label><br>
-                                                    <input  required type="text" id="number" name="number" value="0634328147">
-                                                </div> --}}
-                                                
-                                                <div class="form-control" style="display: flex;border: none;align-items: center;">
-                                                    <input class="rdiobox" required  type="radio" id="Email" name="sendType" value="Email">
-                                                    <label for="Email" style="margin-left: 5px;margin-bottom: 0px;font-weight: bold;">Email</label><br>
-                                                </div>
-                                            </div>
-                                            <div class="show-email-type-send" style="display: none;margin-left: 20px;">
-                                                <div class="form-control" style="display: flex;border: none;align-items: center;">
-                                                    <input class="rdiobox"  type="radio" id="EmailM" name="sendEmailType" value="Now">
-                                                    <label for="EmailM" style="margin-left: 5px;margin-bottom: 0px;">Envoyer Maintenant </label><br>
-                                                </div>
-                                                <div class="form-control" style="display: flex;border: none;align-items: center;">
-                                                    <input class="rdiobox"  type="radio" id="EmailD" name="sendEmailType" value="Different">
-                                                    <label for="EmailD" style="margin-left: 5px;margin-bottom: 0px;">Envoyer Differe </label><br>
-                                                </div>
-                                                <div style="display: none;margin-bottom: 5px;" id="different">
-                                                    
-                                                    <label for="" >Date d'envoi : </label><br>
-                                                    <input class="form-control"  type="date"   name="dateToSend" >
-                                                    <span id="error" style="text-align: center;
-                                                    width: 100%;
-                                                    display: none;
-                                                    background: #DC4C64;
-                                                    color: white;
-                                                    padding: 5px 10px;
-                                                    margin-top: 5px;
-                                                    border-radius: 3px;">date invalid</span>
-                                                </div>
-                                                <label for="" >Email de Souscripteur : </label><br>
-                                                
-                                                    
-                                                    <div >
-                                                        <input class="form-control"  type="text" id="to" name="to" value="{{$subscriber_principale[0]->email}}">
+                                        
+                                            <h6>Choisissez une méthode d'envoi ?</h6>
+                                            {{-- <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p> --}}
+                                            <form id="send_data_form"  action="{{route('printT')}}" method="post">
+                                                <input type="text" name="files_to_send" hidden id="files_to_send">
+                                                @csrf
+                                                <div>
+                                                    <div class="form-control" style="display: flex;border: none;align-items: center;">
+                                                        <input class="rdiobox"  required type="radio" id="Whatsaap" name="sendType" value="Whatsaap">
+                                                        <label  for="Whatsaap" style="margin-left: 5px;margin-bottom: 0px;font-weight: bold;">Whatsapp</label><br>
                                                     </div>
-                                                <label for="" >Emails Cc : </label><br>
-                                                
+                                                    {{-- <div class="form-control" style="display: flex;border: none;align-items: center;">
+                                                        <label  for="number" style="margin-left: 5px;margin-bottom: 0px;font-weight: bold;">Whatsapp number :</label><br>
+                                                        <input  required type="text" id="number" name="number" value="0634328147">
+                                                    </div> --}}
                                                     
-                                                    <div id="cc">
-                                                        <div class="grp" style="display: flex;
-                                                        justify-content: center;
-                                                        align-items: center;">
-
-                                                            <input class="form-control"  type="text" id="emails_cc" name="cc_email[]" >
-                                                            <div style="margin-top: 10px;
-                                                        margin-bottom: 10px;
-                                                        text-align: right;">
-
-                                                        <button type="button" class="btn btn-primary" style="margin-left: 5px" id="add_cc">ajouter</button>
+                                                    <div class="form-control" style="display: flex;border: none;align-items: center;">
+                                                        <input class="rdiobox" required  type="radio" id="Email" name="sendType" value="Email">
+                                                        <label for="Email" style="margin-left: 5px;margin-bottom: 0px;font-weight: bold;">Email</label><br>
+                                                    </div>
+                                                </div>
+                                                <div class="show-email-type-send" style="display: none;margin-left: 20px;">
+                                                    <div>
+                                                    <div class="form-control" style="display: flex;border: none;align-items: center;">
+                                                        <input class="rdiobox"  type="radio" id="EmailM" name="sendEmailType" value="Now">
+                                                        <label for="EmailM" style="margin-left: 5px;margin-bottom: 0px;">Envoyer Maintenant </label><br>
+                                                    </div>
+                                                    <div class="form-control" style="display: flex;border: none;align-items: center;">
+                                                        <input class="rdiobox"  type="radio" id="EmailD" name="sendEmailType" value="Different">
+                                                        <label for="EmailD" style="margin-left: 5px;margin-bottom: 0px;">Envoyer Differe </label><br>
+                                                    </div>
+                                                    <div style="display: none;margin-bottom: 5px;" id="different">
+                                                        
+                                                        <label for="" >Date d'envoi : </label><br>
+                                                        <input class="form-control"  type="date"   name="dateToSend" >
+                                                        <span id="error" style="text-align: center;
+                                                        width: 100%;
+                                                        display: none;
+                                                        background: #DC4C64;
+                                                        color: white;
+                                                        padding: 5px 10px;
+                                                        margin-top: 5px;
+                                                        border-radius: 3px;">date invalid</span>
+                                                    </div>
+                                                    <label for="" >Email de Souscripteur : </label><br>
+                                                    
+                                                        <div >
+                                                            <input class="form-control"  type="text" id="to" name="to" value="{{$subscriber_principale[0]->email}}">
                                                         </div>
-                                                        </div>
-                                                        <span id="error_add" style="text-align: center;
-                                                    width: 100%;
-                                                    display: none;
-                                                    background: #DC4C64;
-                                                    color: white;
-                                                    padding: 5px 10px;
-                                                    margin-top: 5px;
-                                                    margin-bottom: 5px;
-                                                    border-radius: 3px;">element deja existe</span>
-                                                    <span id="error_empty" style="text-align: center;
-                                                    width: 100%;
-                                                    display: none;
-                                                    background: #DC4C64;
-                                                    color: white;
-                                                    padding: 5px 10px;
-                                                    margin-top: 5px;
-                                                    margin-bottom: 5px;
-                                                    border-radius: 3px;">entre un email</span>
+                                                    <label for="" >Emails Cc : </label><br>
                                                     
-                                                    </div>
-                                                    
-                                                
-                                                    <div >
-                                                        <label style="margin-top: 10px;"  for="subject" >Objet : </label><br>
-                                                        <input class="form-control"  type="text" id="subject"  name="message" >
-                                                    </div>
-                                                    <div >
-                                                        <label style="margin-top: 10px;"  for="object" >Message (additionnel) : </label><br>
-                                                        <input class="form-control"  type="text" id="object"  name="object" >
-                                                    </div>
-                                                    <div >
-                                                        <label style="margin-top: 10px;"  for="default_object" >Default message : </label><br>
-                                                        <div style="display: flex;
-                                                        justify-content: center;
-                                                        align-items: center;">
+                                                        
+                                                        <div id="cc">
+                                                            <div class="grp" style="display: flex;
+                                                            justify-content: center;
+                                                            align-items: center;">
+    
+                                                                <input class="form-control"  type="text" id="emails_cc" name="cc_email[]" >
+                                                                <div style="margin-top: 10px;
+                                                            margin-bottom: 10px;
+                                                            text-align: right;">
+    
+    <button type="button" class="btn btn-primary" style="margin-left: 5px" id="add_cc">ajouter</button>
+</div>
 
-                                                            <textarea oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' class="form-control"  id="default_object" style="display: none;"  type="text"  id="default_object"  name="default_object" >Bonjour C'est Polassur Merci De Lire L'appel Suivante SuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivante
+                                                            <span id="error_add" style="text-align: center;
+                                                        width: 100%;
+                                                        display: none;
+                                                        background: #DC4C64;
+                                                        color: white;
+                                                        padding: 5px 10px;
+                                                        margin-top: 5px;
+                                                        margin-bottom: 5px;
+                                                        border-radius: 3px;">element deja existe</span>
+                                                        <span id="error_empty" style="text-align: center;
+                                                        width: 100%;
+                                                        display: none;
+                                                        background: #DC4C64;
+                                                        color: white;
+                                                        padding: 5px 10px;
+                                                        margin-top: 5px;
+                                                        margin-bottom: 5px;
+                                                        border-radius: 3px;">entre un email</span>
+                                                        
+                                                        </div>
+                                                        
+                                                              
+                                                        <div >
+                                                            <label style="margin-top: 10px;"  for="subject" >Objet : </label><br>
+                                                            <input class="form-control"  type="text" id="subject"  name="message" >
+                                                        </div>
+                                                        <div >
+                                                            <label style="margin-top: 10px;"  for="object" >Message (additionnel) : </label><br>
+                                                            <input class="form-control"  type="text" id="object"  name="object" >
+                                                        </div>
+                                                        <button type="button" data-target="#modaldemo8" data-toggle="modal"  class="btn btn-primary" id="show_default_object" style="margin-left: auto;padding: 7px 20px;margin-left: auto;
+                                                        padding: 7px 20px;
+                                                        width: fit-content;
+                                                        display: block;
+                                                        margin-top: 10px;"><i style="font-size: 24px;" class="la la-pencil"></i></button>
+                                                    
+                                                    </div>
+                                                </div>
+                                                @foreach ($quitances as $impay)
+                                                    
+                                                <input type="hidden"  name="subs_id[]" value="{{$impay}}">
+                                                @endforeach
+                                                <div style="text-align: center;
+                                                margin-bottom: 10px;
+                                            ">
+    
+                                                    <button class="btn btn-primary mt-3 mr-2" type="submit" id="send_data_btn">Valider Tache</button>
+                                                </div>
+                                                <div class="modal" id="modaldemo8">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content modal-content-demo">
+                                                            <div class="modal-header">
+                                                                <h6 class="modal-title"></h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                            <textarea oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' class="form-control"  id="default_object"   type="text"  id="default_object"  name="default_object" >Bonjour C'est Polassur Merci De Lire L'appel Suivante SuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivante
                                                             </textarea>
-                                                        <button type="button" onclick="showDefaultObject()" class="btn btn-primary" id="show_default_object" style="margin-left: auto;padding: 7px 20px;"><i style="font-size: 24px;" class="la la-pencil"></i></button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button aria-label="Close" class="btn btn-primary" data-dismiss="modal" type="button"><span aria-hidden="true">modifier</span></button>
+                                                        </div>
                                                         </div>
                                                     </div>
-                                            </div>
-                                            @foreach ($quitances as $impay)
-                                                
-                                            <input type="hidden"  name="subs_id[]" value="{{$impay}}">
-                                            @endforeach
-                                            <div style="text-align: center;">
-
-                                                <button class="btn btn-primary mt-3 mr-2" type="submit" >Valider Tache</button>
-                                            </div>
-                                            
-                                        </form>
-									</div>
-								</div>
-							</div>
-						</div>        
-                            </div>
+                                                </div>  
+                                            </form>
+                                        </div>
+                                   
+						
                 </div>
             </div>
         </div><!-- COL-END -->
@@ -261,9 +262,17 @@
     <!-- Container closed -->
     </div>
     <!-- main-content closed -->
+    <!-- Loader -->
+		<div id="global-loader" style="">
+			<img src="{{URL::asset('assets/img/loader.svg')}}" class="loader-img" alt="Loader">
+		</div>
+		<!-- /Loader -->
     <style>
             .swal-overlay .swal-overlay--show-modal {
         z-index: {X};
+    }
+    #global-loader{
+        display: none;background: #ffffffa8 !important;
     }
     </style>
 @endsection
@@ -329,7 +338,12 @@
                 $('input[id="files_to_send"]').val(selected);
         });
     });
-
+    $(function(){
+        $('#send_data_form').submit(function(e){
+                $('#global-loader').show();
+   
+});
+    });
             function CheckAll(className, elem) {
         var elements = document.getElementsByClassName(className);
         var l = elements.length;
@@ -377,6 +391,7 @@
         input.style.height = "";
         input.style.height = input.scrollHeight + "px"
     }
+
     function removeField(element){
 			var currentElementValue = element.parentElement.children[0].value;
 			
@@ -393,5 +408,17 @@
 					
 		
 	}	
+    </script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
+    <script>
+      $body = document.querySelector( '#default_object' );
+      if($body !==null){
+  
+        ClassicEditor
+            .create( $body )
+            .catch( error => {
+                console.error( error );
+            } );
+      }
     </script>
 @endsection

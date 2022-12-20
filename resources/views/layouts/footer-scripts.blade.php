@@ -31,3 +31,6 @@
 <!-- custom js -->
 <script src="{{URL::asset('assets/js/custom.js')}}"></script><!-- Left-menu js-->
 <script src="{{URL::asset('assets/plugins/side-menu/sidemenu.js')}}"></script>
+
+{{-- editor scripts  --}}
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>

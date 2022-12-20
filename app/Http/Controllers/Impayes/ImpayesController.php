@@ -403,4 +403,12 @@ class ImpayesController extends Controller
         $subscribers = Impayes::where('souscripteur', 'like', $field)->pluck('souscripteur');
         return array_unique(json_decode(json_encode($subscribers), true));
     }
+
+    // get all contact unique name
+    public function getAllContactNames($name)
+    {
+        $field = '%' . implode('%', explode(' ', $name)) . '%';
+        $subscribers = Subscriber::where('raisonsociale', 'like', $field)->pluck('id', 'raisonsociale');
+        return array_unique(json_decode(json_encode($subscribers), true));
+    }
 }

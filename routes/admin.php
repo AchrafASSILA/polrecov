@@ -26,4 +26,5 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/contacts/{id}', [SubscriberController::class, 'getContactGroups'])->name('contacts')->middleware('user');
     Route::get('/send-email/{id}', [ReminderController::class, 'sendAnEmailNow'])->name('sendAnEmailNow')->middleware('user');
     Route::get('/get-names/{name}', [ImpayesController::class, 'getAllUniqueNames'])->name('getAllUniqueNames')->middleware('user');
+    Route::get('/get-contact-names/{name}', [ImpayesController::class, 'getAllContactNames'])->name('getAllContactNames')->middleware('user');
 });

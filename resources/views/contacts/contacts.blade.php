@@ -41,14 +41,20 @@
 									<h4 class="card-title mg-b-0">Les Contacts Table</h4>
 									<i class="mdi mdi-dots-horizontal text-gray"></i>
 								</div>
+								<div class="form-group" style="width: 100%;text-align: left;">
+									<input type="text" aria-controls="example1" class="form-control" style="width: 50%;border-bottom: none" id="sub" placeholder="Name">
+									<select  name="impayes" size="5" id="impayes" style="width:50%;border-top: none;" class="form-control">
+										
+									</select>
 								</div>
-							<div class="card-body">
+								<button class="btn btn-primary" style="margin-left: 5px;    margin-bottom: 10px;" id="reset">Reset</button>
+								</div>
+							<div class="card-body" style="display: none">
 								<div class="table-responsive">
 									<div class="mb-4" >
 										<div class="form-group" style="width: 100%;
 										display: flex;">
 											<input type="text" aria-controls="example1" class="form-control" style="width: 50%" id="sub" placeholder="Name">
-											<button class="btn btn-primary" style="margin-left: 5px" id="reset">Reset</button>
 										</div>
 									</div>
 									<table class="table text-md-nowrap" id="example1">
@@ -61,16 +67,7 @@
 												<th class="wd-15p border-bottom-0">EmaiL</th>
 												</thead>
 										<tbody id="tbImpayes">
-											@foreach ($contacts as $contact)
-											<tr>
-                                                <td style="    cursor: pointer;
-												color: #2196f3;" rais={{$contact->id}}>{{$contact->raisonsociale}}</td>
-												<td style={{$contact->ste_part === 1 ? "color:green" : "color:red"}}>{{ $contact->ste_part === 1 ? "oui" : "non"}}</td>
-												<td>{{$contact->responsable}}</td>
-												<td>{{$contact->telephone}}</td>
-												<td>{{$contact->email}}</td>
-                                                </tr>
-                                            @endforeach
+											
 										</tbody>
 									</table>
 								</div>
@@ -197,8 +194,12 @@
 		 $("#example1").DataTable().column(0).search($(this).val()).draw();
 		 $('#tw').hide();
 		});
-	$("#tbImpayes tr td").click(function(e){     //function_td
-	var search  = ($(this).attr('rais'));
+	// $("#tbImpayes tr td").click(function(e){  
+		$('#impayes').on('change',function(){
+
+	
+var search = $(this).val();   //function_td
+	// var search  = ($(this).attr('value'));
 	$.ajax({
 		url: "{{ URL::to('admin/contacts/') }}/" + search,
 		type: "GET",
@@ -264,5 +265,36 @@
 		$('#sub').val("");
 		$('#tw').hide();
 	})
+	$("#sub").on("input", function () {
+        var search = $(this).val();
+        if (search == "") {
+		$('select[name="impayes"]').empty();
+		$('select[name="subscribers"]').empty();
+		$('#subscribers').prop("disabled", true);
+		$("#example1").DataTable().search("").draw();
+        } else {
+            let parent = search;
+            if (search) {
+                $.ajax({
+                    url: "{{ URL::to('admin/get-contact-names') }}/" + parent,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $('select[name="impayes"]').empty();
+                        
+                        $.each(data, function (key, value) {
+                            $('select[name="impayes"]').append(
+                                '<option value="' +value +'">' +
+                                    key +
+                                    "</option>"
+                            );
+                        });
+                    },
+                });
+            } else {
+                console.log("AJAX load did not work here");
+            }
+        }
+    });
 	</script>
 @endsection
