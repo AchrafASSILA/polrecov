@@ -111,13 +111,7 @@ td{
       <img width="180px" src="{{ public_path('assets/img/brand/polassur.png')}}" alt="">
       <h3 style="text-align: center;font-size: 15.5px;margin:0">RELEVE DES PRIMES NON REGLEES</h3>
       <br><br>
-      @php
-          $i = 0;
-      @endphp
-      @foreach ($receipts as $key => $recs)
-      @php
-          $i+= 1;
-      @endphp
+     
       
       <div class="table"  id="tab">
         <h3 style="font-size: 12px;margin-left: 30px;margin-bottom: 30px;margin-top:30px;">Souscripteur: {{$key}}</h3>
@@ -165,7 +159,7 @@ td{
           </table>
         </div>
         <div onload=""></div>
-        @endforeach
+       
         <div style="margin-top:220px;text-align:right;padding-right:5px;font-size:15px;position: absolute;bottom:0;right:0">
            édité le : {{date('d/m/Y', strtotime( Carbon\Carbon::now()))}}
         </div>

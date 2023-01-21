@@ -1,3 +1,17 @@
+var test = 0;
+$("#example1").on("click", "thead th", function (event) {
+    var clickedHeader = $(this).closest("th").index();
+    if (clickedHeader == 12) {
+        var table = $("#example1").DataTable();
+
+        if (test % 2 === 0) {
+            table.order([11, "asc"]).draw();
+        } else {
+            table.order([11, "desc"]).draw();
+        }
+    }
+    test++;
+});
 var fields = [];
 $(function () {
     $("#generate").click(function () {
@@ -22,6 +36,9 @@ $(function () {
         $('input[type="checkbox"]').prop("checked", false);
     });
 });
+// $(function () {
+
+// });
 $(function () {
     var checked_cells;
     $("#show_all").click(function () {

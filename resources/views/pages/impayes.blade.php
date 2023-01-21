@@ -211,7 +211,8 @@
 												<th   class="set-display border-bottom-0"><span> Police</span></th>
 												<th   class="set-display border-bottom-0"><span> Du</span></th>
 												<th   class="set-display border-bottom-0"><span> Au</span></th>
-												<th   class="set-display border-bottom-0"><span> Prime</span></th>
+												<th   class="set-display border-bottom-0" style="display: none"><span> Prime Order</span></th>
+												<th   class="set-display border-bottom-0" ><span> Prime</span></th>
 												<th   class="set-display border-bottom-0"><span> Mt Encaiss</span></th>
 												<th   class="set-display border-bottom-0"><span> Ref Encaiss</span></th>
 												<th   class="set-display border-bottom-0"><span> Aperiteur</span></th>
@@ -230,8 +231,8 @@
 												<td  class="ellipsis"  ><span>{{$impaye->police}}</span></td>
 												<td  class="ellipsis"  ><span>{{date('d/m/Y', strtotime( $impaye->du))}}</span></td>
 												<td  class="ellipsis" ><span>{{date('d/m/Y', strtotime($impaye->au))}}</span></td>
-												<td  class="ellipsis"  ><span style="text-align: right"> {{$impaye->prime_total}}</span></td>
-												{{-- <td  class="ellipsis"  ><span style="text-align: right"> {{(number_format($impaye->prime_total, 2,'.', ' '))}}</span></td> --}}
+												<td  class="ellipsis"  style="display: none" ><span style="text-align: right"> {{$impaye->prime_total}}</span></td>
+												<td  class="ellipsis"  ><span style="text-align: right"> {{(number_format($impaye->prime_total, 2,'.', ' '))}}</span></td>
 												<td  class="ellipsis" ><span>{{$impaye->mtt_ancaiss}}</span></td>
 												<td  class="ellipsis"  ><span>{{$impaye->ref_encaiss}}</span></td>
 												<td  class="ellipsis" ><span> {{$impaye->aperiteur}}</span></td>
@@ -300,17 +301,17 @@
 
 
 <script>
-	
 
-	$(document).ready(function () {
-		$('#example').dataTable({
-		"columnDefs": [
-			{ 
-				targets: 11 , 
-				"type": "sType",
-			}
-		]
-		});
+	
+	// $(document).ready(function () {
+	// 	$('#example').dataTable({
+	// 	"columnDefs": [
+	// 		{ 
+	// 			targets: 11 , 
+	// 			"type": "sType",
+	// 		}
+	// 	]
+	// 	});
     $("#sub").on("input", function () {
         var search = $(this).val();
         if (search == "") {
@@ -370,7 +371,6 @@
 		$('#subscribers').prop("disabled", true);
         console.log("AJAX load did not work");
     }
-});
 });
 
 </script>

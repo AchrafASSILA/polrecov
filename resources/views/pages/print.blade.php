@@ -124,8 +124,8 @@
                                             <h6>Choisissez une méthode d'envoi ?</h6>
                                             {{-- <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p> --}}
                                             <form id="send_data_form"  action="{{route('printT')}}" method="post">
-                                                <input type="text" name="files_to_send" hidden id="files_to_send">
                                                 @csrf
+                                                <input type="text" name="files_to_send" hidden id="files_to_send">
                                                 <div>
                                                     <div class="form-control" style="display: flex;border: none;align-items: center;">
                                                         <input class="rdiobox"  required type="radio" id="Whatsaap" name="sendType" value="Whatsaap">
@@ -298,22 +298,22 @@
                 }
 
         });
-            $('input[name="dateToSend"]').change(function(){
-                $("#error").css("display",'none');
-                var value = this.value;
-                var d = new Date();
-                day = '' + d.getDate();
-                if (day.length < 2) {
+            // $('input[name="dateToSend"]').change(function(){
+            //     $("#error").css("display",'none');
+            //     var value = this.value;
+            //     var d = new Date();
+            //     day = '' + d.getDate();
+            //     if (day.length < 2) {
 
-                    day = '0' + day;
-                }
-                    var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + day;
+            //         day = '0' + day;
+            //     }
+            //         var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + day;
                 
-                if(value <= strDate){
-                    $("#error").css("display",'block');
-                    this.value = "";
-                }
-            })
+            //     if(value <= strDate){
+            //         $("#error").css("display",'block');
+            //         this.value = "";
+            //     }
+            // })
                 $("input[name$='sendEmailType']").click(function() {
                 var test = $(this).val();
                     if(test === "Different"){
@@ -328,7 +328,7 @@
                 });
             });
         $(function() {
-        $("#generate").click(function() {
+        $("#send_data_btn").click(function() {
             var selected = new Array();
             $("input[class=box1]:checked").each(function() {
                 if(this.value!== 'on'){
@@ -422,3 +422,8 @@
       }
     </script>
 @endsection
+<style>
+    .modal-content{
+        widows: 750px !important;
+    }
+</style>

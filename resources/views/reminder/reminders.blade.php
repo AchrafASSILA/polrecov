@@ -133,10 +133,23 @@
 												<td class="ellipsis"><span> {{  $name}}</span></td>
 												<td >
 													@php
-													$file_path = asset( "../storage/releve") ."/"  . $reminder->fileName . ".pdf";
+													$path = public_path() . '/storage/releve/' .  $reminder->fileName;
+													$files = array_diff(scandir($path), array('.', '..'));
 													@endphp
-													<a class="" style="padding: 8px 15px;width:100%;height:43px;text-decoration:none;" target="_blank"  href="{{$file_path}}">
-														<i class="far fa-eye"></i></a>
+														<div class="dropdown">
+															<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary" data-toggle="dropdown" id="dropdownMenuButton" type="button">operations<i class="fas fa-caret-down ml-1"></i></button>
+															<div  class="dropdown-menu tx-13">
+																
+																@foreach($files as $file)
+
+																	@php
+																$file_path = asset( "../storage/releve") ."/"  . $reminder->fileName . '/'.$file ;
+																@endphp
+																<a style="margin-left:10px; display:block; width: 60px;" title="{{explode('.pdf', $file)[0]}}" class="" style="padding: 8px 15px;width:100%;height:43px;text-decoration:none;" target="_blank"  href="{{$file_path}}">
+																	<i class="far fa-eye"></i></a>
+																
+																@endforeach;
+															</div></div>
 													</td>
                                                 </tr>
                                             @endforeach

@@ -41,9 +41,17 @@ class MailReceipt extends Mailable
         $object = $this->object;
         $default_object = $this->default_object;
         $email =  $this->from('achrafassila678@gmail.com', 'polassur')->subject($this->message)->view('emails.email_rec', compact('object', 'default_object'));
-        $email->attach(public_path('storage\releve\\' . $this->file . '.pdf'));
-
-
+        // $email->attach(public_path('storage\releve\\' . $this->file . '.pdf'));
+        $path = public_path() . '/storage/releve/' . explode('.pdf', $this->file)[0];
+        $files = array_diff(scandir($path), array('.', '..'));
+        foreach ($files as $fl) {
+            # code...
+            if ($fl) {
+                $email->attach($path . '/' . $fl);
+            } else {
+                continue;
+            }
+        }
         foreach ($this->files_to_send as $file) {
             if ($file) {
 

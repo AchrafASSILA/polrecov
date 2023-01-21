@@ -12,6 +12,7 @@ use App\Models\Reminder\Reminder;
 use App\Models\Subscriber\Subscriber;
 use App\Repository\Impayes\ImpayesRepoInterface;
 use Carbon\Carbon;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
@@ -164,6 +165,8 @@ class ImpayesController extends Controller
     // export to pdf and send it 
     public function exportPdf(Request $request)
     {
+        // return ($request);
+
         // try {
         Artisan::call('emails:send');
         $files_to_send =  explode(',', ($request->files_to_send));
@@ -188,6 +191,7 @@ class ImpayesController extends Controller
         $file_name = 'Q_' . implode('_', array_unique($this->strucuteredSubs($request)[3])) . '_' . time();
 
         // generate file 
+
         $this->generatePdf($request, $receipts, $file_name);
         // check if method of send == whatsapp 
         if ($request->sendType == 'Whatsaap') {
@@ -277,11 +281,20 @@ class ImpayesController extends Controller
         try {
             //code...
             Artisan::call('emails:send');
-            view()->share('receipts', $receipts);
-            $file = $file_name . '.pdf';
-            $pdf = PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->save(public_path('storage\releve\\' . $file));
-            // return PDF::loadView('pages.data_generated_form')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->stream();
-            file_put_contents('D:\test\\' . $file, $pdf->output());
+            foreach ($receipts as $key => $recs) {
+                view()->share('recs', $recs);
+                view()->share('key', $key);
+                $folder = $file_name;
+                $file = $key . '.pdf';
+                $path = public_path() . '/storage/releve/' . $folder;
+                if (!file_exists($path)) {
+                    mkdir($path);
+                }
+                $pdf = PDF::loadView('pages.data_generated_form_new')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->save(public_path('storage\releve\\' . $folder . '\\' . $file));
+            }
+            // return PDF::loadView('pages.data_generated_form_new')->setPaper('a4', 'landscape')->set_option('isRemoteEnabled', true)->stream();
+            mkdir('D:\test\\' . $folder);
+            file_put_contents('D:\test\\' . $folder . '\\' . $file, $pdf->output());
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
@@ -290,10 +303,10 @@ class ImpayesController extends Controller
     public function sendEmail($subscriber_email, $file, $files_to_send = '', $subject, $cc, $object, $default_object)
     {
         if (strlen($cc[0]) > 0) {
-            Mail::to($subscriber_email)->cc(array_unique($cc))->send(new MailReceipt($file, $files_to_send, $subject, $object, $default_object));
+            $email = Mail::to($subscriber_email)->cc(array_unique($cc))->send(new MailReceipt($file, $files_to_send, $subject, $object, $default_object));
         } else {
+            $email = Mail::to($subscriber_email)->send(new MailReceipt($file, $files_to_send, $subject, $object, $default_object));
             // send email 
-            Mail::to($subscriber_email)->send(new MailReceipt($file, $files_to_send, $subject, $object, $default_object));
         }
     }
 
