@@ -240,8 +240,7 @@
                                                                 <h6 class="modal-title"></h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                            <textarea oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' class="form-control"  id="default_object"   type="text"  id="default_object"  name="default_object" >Bonjour C'est Polassur Merci De Lire L'appel Suivante SuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivanteSuivante
-                                                            </textarea>
+                                                            <textarea oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' class="form-control"  id="default_object"   type="text"  id="default_object"  name="default_object" ></textarea>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button aria-label="Close" class="btn btn-primary" data-dismiss="modal" type="button"><span aria-hidden="true">modifier</span></button>
